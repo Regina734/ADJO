@@ -1,3 +1,4 @@
+import 'package:adjo/pageAcceuille/acceuille3.dart';
 import 'package:flutter/material.dart';
 
 class AcceuillePage2 extends StatelessWidget {
@@ -110,11 +111,9 @@ class AcceuillePage2 extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Scaffold(),
-                            //AcceuillePage3(),
+                            builder: (context) => AcceuillePage3(),
                           ),
                         );
-                        // Action pour Next
                       },
                     ),
                   ),
