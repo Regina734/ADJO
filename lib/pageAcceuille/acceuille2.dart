@@ -1,8 +1,7 @@
-import 'package:adjo/pageAcceuille/acceuille2.dart';
 import 'package:flutter/material.dart';
 
-class AcceuillePage1 extends StatelessWidget {
-  const AcceuillePage1({super.key});
+class AcceuillePage2 extends StatelessWidget {
+  const AcceuillePage2({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class AcceuillePage1 extends StatelessWidget {
               Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [Image.asset("assets/images/Group 39753.png")],
+                  children: [Image.asset("assets/images/main.png")],
                 ),
               ),
               const SizedBox(height: 40),
@@ -42,7 +41,7 @@ class AcceuillePage1 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const Text(
-                    'Welcome To',
+                    'Choose your',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 36,
@@ -57,12 +56,26 @@ class AcceuillePage1 extends StatelessWidget {
               Row(
                 children: [
                   const Text(
-                    'Adjó',
+                    'Tontine ',
                     style: TextStyle(
                       color: Colors.amberAccent,
                       fontSize: 36,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 2.0,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  const Text(
+                    "community",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 36,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.5,
                     ),
                   ),
                 ],
@@ -74,9 +87,10 @@ class AcceuillePage1 extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      _buildDot(true),
                       const SizedBox(width: 8),
                       _buildDot(false),
+                      const SizedBox(width: 8),
+                      _buildDot(true),
                       const SizedBox(width: 8),
                       _buildDot(false),
                     ],
@@ -96,7 +110,8 @@ class AcceuillePage1 extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AcceuillePage2(),
+                            builder: (context) => Scaffold(),
+                            //AcceuillePage3(),
                           ),
                         );
                         // Action pour Next

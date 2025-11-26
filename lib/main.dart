@@ -1,4 +1,4 @@
-//import 'package:adjocoin/pageAcceuil/acceuille1.dart';
+import 'package:adjo/pageAcceuille/acceuille1.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,8 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(),
-      //AcceuillePage1(),
+      home: AcceuillePage1(),
     );
   }
 }
