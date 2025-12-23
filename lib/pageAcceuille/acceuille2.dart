@@ -96,7 +96,7 @@ class AcceuillePage2 extends StatelessWidget {
                       _buildDot(false),
                     ],
                   ),
-                  SizedBox(width: 350),
+                  SizedBox(width: 300),
                   Container(
                     decoration: const BoxDecoration(
                       color: Colors.amberAccent,

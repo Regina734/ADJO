@@ -1,3 +1,4 @@
+import 'package:adjo/Login/logsig.dart';
 import 'package:flutter/material.dart';
 
 class AcceuillePage3 extends StatelessWidget {
@@ -83,7 +84,7 @@ class AcceuillePage3 extends StatelessWidget {
                       _buildDot(true),
                     ],
                   ),
-                  SizedBox(width: 350),
+                  SizedBox(width: 300),
                   Container(
                     decoration: const BoxDecoration(
                       color: Colors.amberAccent,
@@ -97,7 +98,7 @@ class AcceuillePage3 extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Scaffold()),
+                          MaterialPageRoute(builder: (context) => LogsigPage()),
                         );
                       },
                     ),
