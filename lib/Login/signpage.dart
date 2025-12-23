@@ -177,7 +177,6 @@ class _SignPageState extends State<SignPage> {
 
                   const SizedBox(height: 12),
 
-                  // Description mot de passe
                   Text(
                     'Au moins 8 caractères, comprenant des lettres\nmajuscules et des chiffres.',
                     style: TextStyle(
@@ -189,7 +188,6 @@ class _SignPageState extends State<SignPage> {
 
                   const SizedBox(height: 30),
 
-                  // Checkbox conditions
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -246,7 +244,6 @@ class _SignPageState extends State<SignPage> {
 
                   const SizedBox(height: 250),
 
-                  // Bouton S'inscrire
                   SizedBox(
                     width: double.infinity,
                     height: 56,
@@ -284,7 +281,6 @@ class _SignPageState extends State<SignPage> {
 
                   const SizedBox(height: 80),
 
-                  // Lien vers connexion
                   Center(
                     child: RichText(
                       text: TextSpan(
