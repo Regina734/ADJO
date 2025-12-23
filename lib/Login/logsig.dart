@@ -1,4 +1,5 @@
 import 'package:adjo/Login/loginpage.dart';
+import 'package:adjo/Login/signpage.dart';
 import 'package:flutter/material.dart';
 
 class LogsigPage extends StatelessWidget {
@@ -66,7 +67,7 @@ class LogsigPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const LoginPage(),
+                                builder: (context) => const SignPage(),
                               ),
                             );
                           },
@@ -121,7 +122,7 @@ class LogsigPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Scaffold(),
+                                builder: (context) => const LoginPage(),
                               ),
                             );
                           },
