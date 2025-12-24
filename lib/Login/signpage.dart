@@ -1,3 +1,4 @@
+import 'package:adjo/homeFqa/homedemo.dart';
 import 'package:flutter/material.dart';
 
 class SignPage extends StatefulWidget {
@@ -25,17 +26,17 @@ class _SignPageState extends State<SignPage> {
 
   String? _validatePhone(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Veuillez entrer votre numéro de téléphone';
+      return 'Please enter your phone number';
     }
     return null;
   }
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Veuillez entrer votre mot de passe';
+      return 'Please enter your password';
     }
     if (value.length < 8) {
-      return 'Le mot de passe doit contenir au moins 8 caractères';
+      return 'The password must contain at least 8 characters';
     }
     return null;
   }
@@ -45,7 +46,7 @@ class _SignPageState extends State<SignPage> {
       if (!_acceptTerms) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Veuillez accepter les conditions d\'utilisation'),
+            content: Text('Please accept the terms of use and privacy policy.'),
             backgroundColor: Colors.red,
           ),
         );
@@ -58,7 +59,37 @@ class _SignPageState extends State<SignPage> {
 
       await Future.delayed(const Duration(seconds: 2));
 
-      // Logique d'inscription ici
+      String phone = _phoneController.text;
+      String password = _passwordController.text;
+
+      bool inscriptionReussie = true;
+
+      if (inscriptionReussie) {
+        // Message de succès
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Account created successfully!'),
+              backgroundColor: Colors.green,
+            ),
+          );
+
+          // Navigation vers la page Home
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomechoisePage()),
+          );
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Registration failed. Please try again.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
 
       setState(() {
         _isLoading = false;
@@ -78,7 +109,7 @@ class _SignPageState extends State<SignPage> {
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
-          'S\'inscrire',
+          'Sign Up',
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -98,9 +129,8 @@ class _SignPageState extends State<SignPage> {
                 children: [
                   const SizedBox(height: 30),
 
-                  // Numéro de téléphone
                   const Text(
-                    'Numéro de téléphone',
+                    'Number Phone',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -114,7 +144,7 @@ class _SignPageState extends State<SignPage> {
                     keyboardType: TextInputType.phone,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: 'Entrez votre numéro',
+                      hintText: 'Enter your phone number',
                       hintStyle: TextStyle(color: Colors.grey[600]),
                       filled: true,
                       fillColor: const Color(0xFF1E1E1E),
@@ -131,9 +161,8 @@ class _SignPageState extends State<SignPage> {
 
                   const SizedBox(height: 24),
 
-                  // Mot de passe
                   const Text(
-                    'Mot de passe',
+                    'Password',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -147,7 +176,7 @@ class _SignPageState extends State<SignPage> {
                     obscureText: !_isPasswordVisible,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: 'Entrez votre mot de passe',
+                      hintText: 'Enter your password',
                       hintStyle: TextStyle(color: Colors.grey[600]),
                       filled: true,
                       fillColor: const Color(0xFF1E1E1E),
@@ -178,7 +207,7 @@ class _SignPageState extends State<SignPage> {
                   const SizedBox(height: 12),
 
                   Text(
-                    'Au moins 8 caractères, comprenant des lettres\nmajuscules et des chiffres.',
+                    'At least 8 characters, including uppercase letters and numbers.',
                     style: TextStyle(
                       color: Colors.grey[500],
                       fontSize: 13,
@@ -225,14 +254,14 @@ class _SignPageState extends State<SignPage> {
                               height: 1.4,
                             ),
                             children: const [
-                              TextSpan(text: 'Accepter les '),
+                              TextSpan(text: 'Accept  '),
                               TextSpan(
-                                text: 'conditions d\'utilisation',
+                                text: 'Terms of use ',
                                 style: TextStyle(color: Color(0xFFFDB834)),
                               ),
-                              TextSpan(text: ' & la\n'),
+                              TextSpan(text: ' & \n'),
                               TextSpan(
-                                text: 'politique de confidentialité',
+                                text: 'Privacy Policy',
                                 style: TextStyle(color: Color(0xFFFDB834)),
                               ),
                             ],
@@ -270,7 +299,7 @@ class _SignPageState extends State<SignPage> {
                               ),
                             )
                           : const Text(
-                              'S\'inscrire',
+                              'Sign Up',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
@@ -286,14 +315,14 @@ class _SignPageState extends State<SignPage> {
                       text: TextSpan(
                         style: TextStyle(color: Colors.grey[500], fontSize: 14),
                         children: [
-                          const TextSpan(text: 'Vous avez déjà un compte ? '),
+                          const TextSpan(text: 'Already have an account? '),
                           WidgetSpan(
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.pop(context);
                               },
                               child: const Text(
-                                'Se connecter',
+                                'Log in',
                                 style: TextStyle(
                                   color: Color(0xFFFDB834),
                                   fontSize: 14,

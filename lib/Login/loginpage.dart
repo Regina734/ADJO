@@ -1,3 +1,4 @@
+import 'package:adjo/homeFqa/homedemo.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -24,17 +25,17 @@ class _LoginPageState extends State<LoginPage> {
 
   String? _validatePhone(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Veuillez entrer votre numéro de téléphone';
+      return 'Please enter your phone number';
     }
     return null;
   }
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Veuillez entrer votre mot de passe';
+      return 'Please enter your password';
     }
     if (value.length < 6) {
-      return 'Le mot de passe doit contenir au moins 6 caractères';
+      return 'The password must contain at least 6 characters.';
     }
     return null;
   }
@@ -50,22 +51,21 @@ class _LoginPageState extends State<LoginPage> {
       String phone = _phoneController.text;
       String password = _passwordController.text;
 
-      if (phone == "0161762591" && password == "123456") {
+      if (phone == "0161762591" && password == "Karim&1234") {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Connexion réussie !'),
+            content: Text('Successful connection !'),
             backgroundColor: Colors.green,
           ),
         );
-        // Navigation vers la page d'accueil
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const Scaffold()),
+          MaterialPageRoute(builder: (context) => const HomechoisePage()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Numéro ou mot de passe incorrect'),
+            content: Text('Number or password incorrect'),
             backgroundColor: Colors.red,
           ),
         );
@@ -83,11 +83,11 @@ class _LoginPageState extends State<LoginPage> {
       builder: (context) => AlertDialog(
         backgroundColor: const Color(0xFF1E1E1E),
         title: const Text(
-          'Mot de passe oublié',
+          'Forgot Password ?',
           style: TextStyle(color: Colors.white),
         ),
         content: const Text(
-          'Un email de récupération sera envoyé à votre adresse.',
+          'A recovery email will be sent to your address.',
           style: TextStyle(color: Colors.grey),
         ),
         actions: [
@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
-          'Se connecter',
+          'Login',
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -132,9 +132,8 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   const SizedBox(height: 30),
 
-                  // Champ Numéro de téléphone
                   const Text(
-                    'Numéro de téléphone',
+                    'Number Phone',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -148,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                     keyboardType: TextInputType.phone,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: 'Entrez votre numéro',
+                      hintText: 'Enter your phone number ',
                       hintStyle: TextStyle(color: Colors.grey[600]),
                       filled: true,
                       fillColor: const Color(0xFF1E1E1E),
@@ -165,9 +164,8 @@ class _LoginPageState extends State<LoginPage> {
 
                   const SizedBox(height: 24),
 
-                  // Champ Mot de passe
                   const Text(
-                    'Mot de passe',
+                    'Password',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -181,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                     obscureText: !_isPasswordVisible,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: 'Entrez votre mot de passe',
+                      hintText: 'Enter your password',
                       hintStyle: TextStyle(color: Colors.grey[600]),
                       filled: true,
                       fillColor: const Color(0xFF1E1E1E),
@@ -211,11 +209,10 @@ class _LoginPageState extends State<LoginPage> {
 
                   const SizedBox(height: 16),
 
-                  // Mot de passe oublié
                   GestureDetector(
                     onTap: _forgotPassword,
                     child: const Text(
-                      'Mot de passe oublié ?',
+                      'Forgot password ?',
                       style: TextStyle(
                         color: Color(0xFFFDB834),
                         fontSize: 14,
@@ -226,7 +223,6 @@ class _LoginPageState extends State<LoginPage> {
 
                   const SizedBox(height: 100),
 
-                  // Bouton Se connecter
                   SizedBox(
                     width: double.infinity,
                     height: 56,
@@ -253,7 +249,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             )
                           : const Text(
-                              'Se connecter',
+                              'Login',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
@@ -264,20 +260,19 @@ class _LoginPageState extends State<LoginPage> {
 
                   const SizedBox(height: 300),
 
-                  // Lien Créer un compte
                   Center(
                     child: RichText(
                       text: TextSpan(
                         style: TextStyle(color: Colors.grey[500], fontSize: 14),
                         children: [
-                          const TextSpan(text: 'Vous découvrez Adjó ? '),
+                          const TextSpan(text: 'New to Adjó ? '),
                           WidgetSpan(
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.pop(context);
                               },
                               child: const Text(
-                                'Créer un compte',
+                                'Create an account',
                                 style: TextStyle(
                                   color: Color(0xFFFDB834),
                                   fontSize: 14,
