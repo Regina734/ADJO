@@ -1,6 +1,7 @@
-import 'package:adjo/homeFqa/groupT.dart';
-import 'package:adjo/homeFqa/individualT.dart';
+import 'package:adjo/homeFqa/community.dart';
+import 'package:adjo/homeFqa/mybox.dart';
 import 'package:adjo/homeFqa/tontine.dart';
+import 'package:adjo/widgetPage/videopage.dart';
 import 'package:flutter/material.dart';
 
 class HomechoisePage extends StatefulWidget {
@@ -13,40 +14,33 @@ class HomechoisePage extends StatefulWidget {
 class _HomechoisePageState extends State<HomechoisePage> {
   String? selectedTontine;
 
-  final List<Map<String, dynamic>> tontineOptions = [
-    {'name': 'Create a Tontine ', 'page': 'CreateTontinePage'},
-    {
-      'name': 'Create an individual vault',
-      'page': 'CreateInduvidalTontinePage',
-    },
-    {'name': 'Create a group chest', 'page': 'CreategroupTontinePage'},
+  // Liste des options
+  final List<Map<String, String>> tontineOptions = [
+    {'name': 'Create a Tontine', 'page': 'CreateTontinePage'},
+    {'name': 'Create my box', 'page': 'CreatemyBoxPage'},
+    {'name': 'Create my community', 'page': 'CreatemyCommunityPage'},
   ];
 
   void navigateToTontine(String pageName) {
-    // Navigation selon la page sélectionnée
+    Widget? page;
+
     switch (pageName) {
       case 'CreateTontinePage':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const CreateTontinePage()),
-        );
+        page = const CreateTontinePage();
         break;
-      case 'CreateInduvidalTontinePage':
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const CreateInduvidalTontinePage(),
-          ),
-        );
+      case 'CreatemyBoxPage':
+        page = const CreatemyBoxPage();
         break;
-      case 'CreategroupTontinePage':
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const CreategroupTontinePage(),
-          ),
-        );
+      case 'CreatemyCommunityPage':
+        page = const CreatemyCommunityPage();
         break;
+    }
+
+    if (page != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const Scaffold()),
+      );
     }
   }
 
@@ -61,23 +55,22 @@ class _HomechoisePageState extends State<HomechoisePage> {
             children: [
               const Spacer(flex: 2),
 
+              // Logo
               Center(
-                child: Container(
+                child: SizedBox(
                   width: 200,
                   height: 200,
-
-                  child: Center(
-                    child: Image.asset(
-                      "assets/images/Group 39753.png",
-                      width: 200,
-                      height: 200,
-                    ),
+                  child: Image.asset(
+                    "assets/images/Group 39753.png",
+                    width: 200,
+                    height: 200,
                   ),
                 ),
               ),
 
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
 
+              // Titre
               const Text(
                 'Adjó',
                 style: TextStyle(
@@ -91,6 +84,7 @@ class _HomechoisePageState extends State<HomechoisePage> {
 
               const SizedBox(height: 16),
 
+              // Sous-titre
               const Text(
                 'Unleash your financial\npotential',
                 style: TextStyle(
@@ -104,6 +98,7 @@ class _HomechoisePageState extends State<HomechoisePage> {
 
               const Spacer(flex: 2),
 
+              // Dropdown
               Container(
                 width: double.infinity,
                 height: 60,
@@ -148,7 +143,7 @@ class _HomechoisePageState extends State<HomechoisePage> {
                       return DropdownMenuItem<String>(
                         value: option['name'],
                         child: Text(
-                          option['name'],
+                          option['name']!,
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 16,
@@ -166,7 +161,7 @@ class _HomechoisePageState extends State<HomechoisePage> {
                         final selectedOption = tontineOptions.firstWhere(
                           (option) => option['name'] == newValue,
                         );
-                        navigateToTontine(selectedOption['page']);
+                        navigateToTontine(selectedOption['page']!);
                       }
                     },
                   ),
@@ -175,38 +170,46 @@ class _HomechoisePageState extends State<HomechoisePage> {
 
               const Spacer(flex: 1),
 
-              // je dois faire une demo
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white, width: 2),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Icon(
-                  Icons.play_arrow,
-                  color: Colors.white,
-                  size: 32,
+              // Bouton vidéo
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const VideoDemoPage(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white, width: 2),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(
+                    Icons.play_arrow,
+                    color: Colors.white,
+                    size: 32,
+                  ),
                 ),
               ),
 
               const Spacer(flex: 2),
 
+              // Bouton Start
               GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Scaffold()),
-                  );
-                  /*ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Commençons !'),
-                      backgroundColor: Color(0xFFFDB834),
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const Scaffold(), // Remplacez par votre page
                     ),
-                  );*/
+                  );
                 },
                 child: Container(
-                  width: double.infinity,
+                  width: 300,
                   height: 60,
                   decoration: BoxDecoration(
                     color: Colors.white,
