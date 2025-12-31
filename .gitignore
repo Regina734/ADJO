@@ -5,11 +5,9 @@
 *.swp
 .DS_Store
 .atom/
-.build/
 .buildlog/
 .history
 .svn/
-.swiftpm/
 migrate_working_dir/
 
 # IntelliJ related
@@ -27,11 +25,12 @@ migrate_working_dir/
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
+.flutter-plugins
 .flutter-plugins-dependencies
+.packages
 .pub-cache/
 .pub/
 /build/
-/coverage/
 
 # Symbolication related
 app.*.symbols
@@ -43,3 +42,63 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# ===== MONOREPO SPECIFIC =====
+
+# Frontend (Flutter) - Additional
+frontend/.dart_tool/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+frontend/.packages
+frontend/build/
+frontend/ios/Pods/
+frontend/ios/.symlinks/
+frontend/android/.gradle/
+frontend/android/app/debug/
+frontend/android/app/profile/
+frontend/android/app/release/
+frontend/android/local.properties
+frontend/pubspec.lock
+frontend/.metadata
+
+# Backend (Rust)
+backend/target/
+backend/Cargo.lock
+backend/.env
+backend/.cargo/
+
+# Blockchain (Stellar)
+blockchain/target/
+blockchain/node_modules/
+blockchain/package-lock.json
+blockchain/dist/
+
+# Documentation
+docs/node_modules/
+
+# Scripts
+scripts/node_modules/
+
+# ===== SECRETS & ENVIRONMENT =====
+*.key
+*.pem
+*.env
+.env.local
+.env.production
+secrets/
+*.p12
+*.jks
+*.keystore
+
+# ===== IDE & EDITORS =====
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ===== OS SPECIFIC =====
+Thumbs.db
+Desktop.ini
+
+
+
