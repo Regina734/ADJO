@@ -13,11 +13,11 @@ Digitaliser la tontine traditionnelle de manière sécurisée et transparente, t
 ##  Structure du projet
 ```
 ADJO/
-├── frontend/        # 📱 Application mobile Flutter (iOS & Android)
-├── backend/         # ⚙️ API REST en Rust
-├── blockchain/      # ⛓️ Smart contracts Stellar
-├── docs/            # 📚 Documentation du projet
-└── scripts/         # 🔧 Scripts utilitaires
+├── frontend/        #  Application mobile Flutter (iOS & Android)
+├── backend/         #  API REST en Rust
+├── blockchain/      #  Smart contracts Stellar
+├── docs/            #  Documentation du projet
+└── scripts/         #  Scripts utilitaires
 ```
 
 ##  Démarrage rapide
@@ -76,10 +76,10 @@ npm start
 
 ##  Documentation
 
-- [📋 Cahier des charges](docs/cahier-de-charges.md)
-- [📱 Frontend README](frontend/README.md)
-- [⚙️ Backend README](backend/README.md)
-- [⛓️ Blockchain README](blockchain/README.md)
+- [ Cahier des charges](docs/cahier-de-charges.md)
+- [ Frontend README](frontend/README.md)
+- [ Backend README](backend/README.md)
+- [ Blockchain README](blockchain/README.md)
 
 ##  Contribution
 
@@ -124,11 +124,11 @@ main (production)
 - **Lead Developer**: Regina
 - **Repository**: [github.com/Regina734/ADJO](https://github.com/Regina734/ADJO)
 
-## 📄 Licence
+##  Licence
 
 MIT License
 
-## 🔗 Liens utiles
+##  Liens utiles
 
 - [Documentation Flutter](https://flutter.dev/docs)
 - [Rust Book](https://doc.rust-lang.org/book/)
@@ -136,6 +136,6 @@ MIT License
 
 ---
 
-Made with ❤️ for African communities
+Made with for African communities
 
 
