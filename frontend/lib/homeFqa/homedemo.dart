@@ -13,8 +13,8 @@ class HomechoisePage extends StatefulWidget {
 
 class _HomechoisePageState extends State<HomechoisePage> {
   String? selectedTontine;
+  Widget? selectedPage;
 
-  // Liste des options
   final List<Map<String, String>> tontineOptions = [
     {'name': 'Create a Tontine', 'page': 'CreateTontinePage'},
     {'name': 'Create my box', 'page': 'CreatemyBoxPage'},
@@ -36,10 +36,25 @@ class _HomechoisePageState extends State<HomechoisePage> {
         break;
     }
 
-    if (page != null) {
+    setState(() {
+      selectedPage = page;
+    });
+  }
+
+  void _onStartPressed() {
+    if (selectedPage != null) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const Scaffold()),
+        MaterialPageRoute(builder: (context) => selectedPage!),
+      );
+    } else {
+      // Afficher un message si aucune option n'est sélectionnée
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please choose an option first'),
+          backgroundColor: Colors.orange,
+          duration: Duration(seconds: 2),
+        ),
       );
     }
   }
@@ -55,7 +70,6 @@ class _HomechoisePageState extends State<HomechoisePage> {
             children: [
               const Spacer(flex: 2),
 
-              // Logo
               Center(
                 child: SizedBox(
                   width: 200,
@@ -70,7 +84,6 @@ class _HomechoisePageState extends State<HomechoisePage> {
 
               const SizedBox(height: 20),
 
-              // Titre
               const Text(
                 'Adjó',
                 style: TextStyle(
@@ -98,7 +111,6 @@ class _HomechoisePageState extends State<HomechoisePage> {
 
               const Spacer(flex: 2),
 
-              // Dropdown
               Container(
                 width: double.infinity,
                 height: 60,
@@ -170,7 +182,6 @@ class _HomechoisePageState extends State<HomechoisePage> {
 
               const Spacer(flex: 1),
 
-              // Bouton vidéo
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -197,33 +208,30 @@ class _HomechoisePageState extends State<HomechoisePage> {
 
               const Spacer(flex: 2),
 
-              // Bouton Start
               GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          const Scaffold(), // Remplacez par votre page
-                    ),
-                  );
-                },
+                onTap: selectedPage != null ? _onStartPressed : null,
                 child: Container(
                   width: 300,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: selectedPage != null
+                        ? Colors.white
+                        : Colors.grey[800],
                     borderRadius: BorderRadius.circular(30),
                     border: Border.all(
-                      color: const Color(0xFFFDB834),
+                      color: selectedPage != null
+                          ? const Color(0xFFFDB834)
+                          : Colors.grey[600]!,
                       width: 3,
                     ),
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Text(
                       'Start',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: selectedPage != null
+                            ? Colors.black
+                            : Colors.grey[600],
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),

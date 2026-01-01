@@ -1,3 +1,4 @@
+import 'package:adjo/Login/forgotpass.dart';
 import 'package:adjo/homeFqa/homedemo.dart';
 import 'package:flutter/material.dart';
 
@@ -78,25 +79,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _forgotPassword() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1E1E1E),
-        title: const Text(
-          'Forgot Password ?',
-          style: TextStyle(color: Colors.white),
-        ),
-        content: const Text(
-          'A recovery email will be sent to your address.',
-          style: TextStyle(color: Colors.grey),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('OK', style: TextStyle(color: Color(0xFFFDB834))),
-          ),
-        ],
-      ),
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ForgotPasswordPage()),
     );
   }
 
