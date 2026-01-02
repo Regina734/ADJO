@@ -35,7 +35,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         _isLoading = true;
       });
 
-      // Simuler l'envoi du code SMS
       await Future.delayed(const Duration(seconds: 2));
 
       setState(() {
