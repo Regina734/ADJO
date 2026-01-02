@@ -42,7 +42,7 @@ thiserror = "1"
 anyhow = "1"
 
 # SMS Provider
-twilio = { version = "0.14", optional = true }
+twilio = { version = "1", optional = true }
 
 # Blockchain Stellar
 stellar-base = { version = "0.7", optional = true }

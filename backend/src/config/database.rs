@@ -28,8 +28,7 @@ impl DatabaseConfig {
         let mut opt = sea_orm::ConnectOptions::new(&self.url);
         opt.max_connections(self.max_connections)
             .min_connections(self.min_connections)
-            .sqlx_logging(true)
-            .sqlx_logging_level(log::LevelFilter::Debug);
+            .sqlx_logging(true);
 
         Database::connect(opt).await
     }
