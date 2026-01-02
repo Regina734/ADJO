@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: adjo-postgres
+    environment:
+      POSTGRES_USER: adjo_user
+      POSTGRES_PASSWORD: adjo_password
+      POSTGRES_DB: adjo_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U adjo_user -d adjo_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - adjo-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: adjo-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    networks:
+      - adjo-network
+
+  # Backend service (uncomment when ready)
+  # backend:
+  #   build: .
+  #   container_name: adjo-backend
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     DATABASE_URL: postgresql://adjo_user:adjo_password@postgres:5432/adjo_db
+  #     APP_HOST: 0.0.0.0
+  #     APP_PORT: 8000
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #   networks:
+  #     - adjo-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  adjo-network:
+    driver: bridge

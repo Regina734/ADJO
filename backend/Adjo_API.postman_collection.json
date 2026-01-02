@@ -1,0 +1,1416 @@
+{
+	"info": {
+		"_postman_id": "adjo-api-collection-v1",
+		"name": "Adjó API - Backend Rust",
+		"description": "Collection complète des endpoints API Adjó pour le développement frontend.\n\n## Stack\n- Framework: Axum (Rust)\n- Database: PostgreSQL\n- Auth: JWT Bearer Token\n- Blockchain: Stellar\n\n## Base URL\n- Development: http://localhost:8000\n- Production: https://api.adjo.app\n\n## Authentification\nLa plupart des endpoints nécessitent un JWT token dans le header:\n```\nAuthorization: Bearer <token>\n```",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/health",
+							"host": ["{{baseUrl}}"],
+							"path": ["health"]
+						},
+						"description": "Vérifier le statut du serveur et de la base de données"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"phone\": \"0161762591\",\n  \"email\": \"user@example.com\",\n  \"password\": \"Password123!\",\n  \"full_name\": \"John Doe\",\n  \"language\": \"fr\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "register"]
+						},
+						"description": "Inscription d'un nouvel utilisateur. Envoie un code OTP par SMS."
+					},
+					"response": []
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"phone\": \"0161762591\",\n  \"code\": \"12345\",\n  \"purpose\": \"signup\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/verify-otp",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "verify-otp"]
+						},
+						"description": "Vérifier le code OTP reçu par SMS"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"token\", jsonData.data.access_token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"phone\": \"0161762591\",\n  \"password\": \"Password123!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "login"]
+						},
+						"description": "Connexion utilisateur. Retourne un JWT access token."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/logout",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "logout"]
+						},
+						"description": "Déconnexion (blacklist le token JWT)"
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"phone\": \"0161762591\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/forgot-password",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "forgot-password"]
+						},
+						"description": "Demander un code OTP pour réinitialiser le mot de passe"
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"phone\": \"0161762591\",\n  \"otp_code\": \"12345\",\n  \"new_password\": \"NewPassword123!\",\n  \"confirm_password\": \"NewPassword123!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/reset-password",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "reset-password"]
+						},
+						"description": "Réinitialiser le mot de passe avec le code OTP"
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/refresh",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "auth", "refresh"]
+						},
+						"description": "Obtenir un nouveau access token"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tontines",
+			"item": [
+				{
+					"name": "Create Tontine",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Tontine Janvier 2026\",\n  \"description\": \"Tontine mensuelle entre amis\",\n  \"amount\": 50000,\n  \"currency\": \"XAF\",\n  \"frequency\": \"monthly\",\n  \"tontine_type\": \"blockchain\",\n  \"total_rounds\": 12,\n  \"max_members\": 10,\n  \"start_date\": \"2026-02-01\",\n  \"community_id\": null\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/tontines",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tontines"]
+						},
+						"description": "Créer une nouvelle tontine (classique ou blockchain)"
+					},
+					"response": []
+				},
+				{
+					"name": "List Tontines",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/tontines?page=1&per_page=20&status=active",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tontines"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "20"
+								},
+								{
+									"key": "status",
+									"value": "active"
+								}
+							]
+						},
+						"description": "Lister mes tontines (avec filtres et pagination)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tontine Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/tontines/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tontines", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Obtenir les détails d'une tontine + membres + contributions"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Tontine",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Tontine Janvier 2026 - Updated\",\n  \"description\": \"Description mise à jour\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/tontines/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tontines", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Modifier une tontine (admin seulement)"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Tontine",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/tontines/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tontines", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Supprimer une tontine (créateur seulement)"
+					},
+					"response": []
+				},
+				{
+					"name": "Contribute to Tontine",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": 50000,\n  \"round_number\": 1,\n  \"payment_method\": \"wallet\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/tontines/:id/contribute",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tontines", ":id", "contribute"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Contribuer à une tontine (via Stellar si blockchain)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Contributions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/tontines/:id/contributions",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tontines", ":id", "contributions"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Historique des contributions d'une tontine"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Member",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_id\": \"uuid-user\",\n  \"turn_order\": 3\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/tontines/:id/members",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tontines", ":id", "members"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Ajouter un membre à la tontine"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Member",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/tontines/:id/members/:user_id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tontines", ":id", "members", ":user_id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-tontine"
+								},
+								{
+									"key": "user_id",
+									"value": "uuid-user"
+								}
+							]
+						},
+						"description": "Retirer un membre de la tontine"
+					},
+					"response": []
+				},
+				{
+					"name": "Distribute Funds",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"recipient_user_id\": \"uuid-user\",\n  \"round_number\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/tontines/:id/distribute",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "tontines", ":id", "distribute"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Distribuer les gains (smart contract si blockchain)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Box (Épargne)",
+			"item": [
+				{
+					"name": "Create Box",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Ma Box Épargne\",\n  \"description\": \"Épargne pour projet\",\n  \"currency\": \"XAF\",\n  \"goal_amount\": 1000000,\n  \"goal_date\": \"2026-12-31\",\n  \"box_type\": \"standard\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/box",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "box"]
+						},
+						"description": "Créer une box d'épargne (avec wallet Stellar optionnel)"
+					},
+					"response": []
+				},
+				{
+					"name": "List Boxes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/box",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "box"]
+						},
+						"description": "Lister mes boxes d'épargne"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Box Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/box/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "box", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Détails box + transactions + progression objectif"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Box",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Ma Box Updated\",\n  \"goal_amount\": 1500000\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/box/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "box", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Modifier une box (nom, objectif)"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Box",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/box/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "box", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Supprimer une box"
+					},
+					"response": []
+				},
+				{
+					"name": "Deposit",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": 50000,\n  \"reference\": \"Dépôt janvier\",\n  \"description\": \"Économies du mois\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/box/:id/deposit",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "box", ":id", "deposit"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Déposer de l'argent (transaction Stellar)"
+					},
+					"response": []
+				},
+				{
+					"name": "Withdraw",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"amount\": 25000,\n  \"reference\": \"Retrait urgent\",\n  \"withdrawal_type\": \"standard\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/box/:id/withdraw",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "box", ":id", "withdraw"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Retirer de l'argent (avec calcul fees)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Transactions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/box/:id/transactions?page=1&per_page=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "box", ":id", "transactions"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "20"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Historique des transactions de la box"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Communities",
+			"item": [
+				{
+					"name": "Create Community",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Amis de Cotonou\",\n  \"description\": \"Groupe d'amis pour épargne commune\",\n  \"rules\": \"Contributions mensuelles obligatoires\",\n  \"max_members\": 20,\n  \"is_private\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/communities",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "communities"]
+						},
+						"description": "Créer une communauté"
+					},
+					"response": []
+				},
+				{
+					"name": "List Communities",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/communities",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "communities"]
+						},
+						"description": "Lister mes communautés"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Community Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/communities/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "communities", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Détails communauté + membres + tontines"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Community",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Amis de Cotonou - Updated\",\n  \"description\": \"Description mise à jour\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/communities/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "communities", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Modifier une communauté"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Community",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/communities/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "communities", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Supprimer une communauté"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Member",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_id\": \"uuid-user\",\n  \"role\": \"member\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/communities/:id/members",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "communities", ":id", "members"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Ajouter un membre à la communauté"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Member",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/communities/:id/members/:user_id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "communities", ":id", "members", ":user_id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-community"
+								},
+								{
+									"key": "user_id",
+									"value": "uuid-user"
+								}
+							]
+						},
+						"description": "Retirer un membre de la communauté"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Community Tontines",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/communities/:id/tontines",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "communities", ":id", "tontines"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Lister les tontines de la communauté"
+					},
+					"response": []
+				},
+				{
+					"name": "Join by Code",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"code\": \"ABC123XYZ\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/communities/join/:code",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "communities", "join", ":code"],
+							"variable": [
+								{
+									"key": "code",
+									"value": "ABC123XYZ"
+								}
+							]
+						},
+						"description": "Rejoindre une communauté par code"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/user/profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user", "profile"]
+						},
+						"description": "Obtenir le profil utilisateur + subscription tier"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"full_name\": \"John Doe Updated\",\n  \"email\": \"newemail@example.com\",\n  \"language\": \"en\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user/profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user", "profile"]
+						},
+						"description": "Modifier le profil (nom, email, langue)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/user/dashboard",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user", "dashboard"]
+						},
+						"description": "Dashboard: stats tontines, boxes, communities, balance total"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Notifications",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/user/notifications?unread_only=true",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user", "notifications"],
+							"query": [
+								{
+									"key": "unread_only",
+									"value": "true"
+								}
+							]
+						},
+						"description": "Lister les notifications (avec count non lues)"
+					},
+					"response": []
+				},
+				{
+					"name": "Mark Notification as Read",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/user/notifications/:id/read",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user", "notifications", ":id", "read"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Marquer une notification comme lue"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subscription",
+			"item": [
+				{
+					"name": "Get Plans",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/subscription/plans",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "subscription", "plans"]
+						},
+						"description": "Liste des plans (free, premium) avec prix et features"
+					},
+					"response": []
+				},
+				{
+					"name": "Upgrade to Premium",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"plan\": \"premium\",\n  \"payment_method\": \"mobile_money\",\n  \"billing_period\": \"monthly\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/subscription/upgrade",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "subscription", "upgrade"]
+						},
+						"description": "Passer en premium"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Subscription",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/subscription/cancel",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "subscription", "cancel"]
+						},
+						"description": "Annuler l'abonnement premium"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subscription Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/subscription/status",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "subscription", "status"]
+						},
+						"description": "Statut de l'abonnement actuel"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FAQ & Learning",
+			"item": [
+				{
+					"name": "Get FAQ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/faq?lang=fr&category=tontine",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "faq"],
+							"query": [
+								{
+									"key": "lang",
+									"value": "fr",
+									"description": "fr, en, fon"
+								},
+								{
+									"key": "category",
+									"value": "tontine",
+									"description": "tontine, blockchain, security"
+								}
+							]
+						},
+						"description": "Liste FAQ multilingue (FR, EN, FON)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Demo Scenarios",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/demo/scenarios",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "demo", "scenarios"]
+						},
+						"description": "Scénarios de démo disponibles"
+					},
+					"response": []
+				},
+				{
+					"name": "Simulate Demo Action",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"action\": \"create_tontine\",\n  \"params\": {\n    \"amount\": 10000\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/demo/:scenario_id/simulate",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "demo", ":scenario_id", "simulate"],
+							"variable": [
+								{
+									"key": "scenario_id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Simuler une action de démo"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ads",
+			"item": [
+				{
+					"name": "Get Ads",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/ads",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "ads"]
+						},
+						"description": "Publicités ciblées (exclues si premium)"
+					},
+					"response": []
+				},
+				{
+					"name": "Track Ad View",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/ads/:id/view",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "ads", ":id", "view"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "uuid-here"
+								}
+							]
+						},
+						"description": "Tracker l'impression d'une publicité"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Blockchain",
+			"item": [
+				{
+					"name": "Create Wallet",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/blockchain/wallet",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "blockchain", "wallet"]
+						},
+						"description": "Créer un wallet Stellar pour l'utilisateur"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Balance",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/blockchain/balance",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "blockchain", "balance"]
+						},
+						"description": "Balance XLM + custom assets Stellar"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Blockchain Transactions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/blockchain/transactions?page=1&limit=20",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "blockchain", "transactions"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						},
+						"description": "Historique des transactions blockchain"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

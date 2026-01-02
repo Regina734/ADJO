@@ -1,0 +1,66 @@
+[package]
+name = "adjo-backend"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Web framework
+axum = { version = "0.7", features = ["macros"] }
+tokio = { version = "1", features = ["full"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "trace", "timeout"] }
+tower_governor = "0.3"
+
+# Database
+sea-orm = { version = "0.12", features = ["sqlx-postgres", "runtime-tokio-rustls", "macros"] }
+sea-orm-migration = "0.12"
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Auth & Security
+jsonwebtoken = "9"
+bcrypt = "0.15"
+uuid = { version = "1", features = ["v4", "serde"] }
+
+# Validation
+validator = { version = "0.18", features = ["derive"] }
+
+# Date/Time
+chrono = { version = "0.4", features = ["serde"] }
+
+# Environment
+dotenv = "0.15"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Error handling
+thiserror = "1"
+anyhow = "1"
+
+# SMS Provider
+twilio = { version = "0.14", optional = true }
+
+# Blockchain Stellar
+stellar-base = { version = "0.7", optional = true }
+
+# HTTP client (pour SMS et blockchain)
+reqwest = { version = "0.11", features = ["json"] }
+
+# Encryption (pour stellar private keys)
+aes-gcm = "0.10"
+base64 = "0.22"
+rand = "0.8"
+
+[dev-dependencies]
+axum-test = "14"
+mockall = "0.12"
+fake = "2.9"
+
+[features]
+default = ["sms", "blockchain"]
+sms = ["twilio"]
+blockchain = ["stellar-base"]
