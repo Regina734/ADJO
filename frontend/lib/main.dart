@@ -1,7 +1,18 @@
-import 'package:adjo/pageAcceuille/acceuille1.dart';
+import 'package:adjo/app_router.dart';
+import 'package:adjo/services/storage_service.dart';
+import 'package:adjo/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await StorageService().init();
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    //DeviceOrientation.portraitDown,
+  ]);
+
   runApp(const MyApp());
 }
 
@@ -12,7 +23,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AcceuillePage1(),
+      theme: AppTheme.darkTheme,
+      initialRoute: AppRouter.welcome,
+      onGenerateRoute: AppRouter.generateRoute,
+      // home: WelcomeScreen(),
+
+      //MyCommunityScreen(),
     );
   }
 }
