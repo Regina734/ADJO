@@ -1,0 +1,12 @@
+<!-- Placeholder SVG pour blockchain.jpg -->
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#1a1a2e"/>
+  <text x="200" y="150" font-size="32" font-family="Arial" fill="#fdb834" text-anchor="middle" font-weight="bold">
+    BLOCKCHAIN
+  </text>
+  <circle cx="100" cy="80" r="25" fill="#fdb834" opacity="0.8"/>
+  <circle cx="200" cy="60" r="25" fill="#9b8358" opacity="0.8"/>
+  <circle cx="300" cy="80" r="25" fill="#fdb834" opacity="0.8"/>
+  <line x1="125" y1="80" x2="175" y2="60" stroke="#fdb834" stroke-width="2"/>
+  <line x1="225" y1="60" x2="275" y2="80" stroke="#fdb834" stroke-width="2"/>
+</svg>

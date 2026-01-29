@@ -24,11 +24,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
-      initialRoute: AppRouter.welcome,
+      initialRoute: AppRouter.splash,
       onGenerateRoute: AppRouter.generateRoute,
-      // home: WelcomeScreen(),
-
-      //MyCommunityScreen(),
     );
   }
 }

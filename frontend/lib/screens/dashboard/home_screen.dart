@@ -5,535 +5,490 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Good morning',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'ID: ......',
-                        style: TextStyle(color: Colors.grey, fontSize: 12),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.notifications_outlined,
-                        color: Colors.white,
-                        size: 24,
-                      ),
-                      SizedBox(width: 20),
-                      Icon(Icons.help_outline, color: Colors.white, size: 24),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 24),
-
-              // Balance Card
-              Container(
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFF9B8358), Color(0xFF6B5740)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Column(
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'TOTAL BALANCE',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 10,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              '000,000 XOF',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              '( 000.0 XLM ) 0.0%',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          'STELLAR MAINNET',
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 9,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      'Good morning',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFFDB834),
-                              foregroundColor: Colors.black,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              padding: EdgeInsets.symmetric(vertical: 12),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.add_circle_outline, size: 18),
-                                SizedBox(width: 8),
-                                Text(
-                                  'Deposit',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 12),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF9B8358),
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              padding: EdgeInsets.symmetric(vertical: 12),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.send, size: 18),
-                                SizedBox(width: 8),
-                                Text(
-                                  'Send',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                    Text(
+                      'ID: ......',
+                      style: TextStyle(color: Colors.grey, fontSize: 12),
                     ),
                   ],
                 ),
-              ),
-              SizedBox(height: 24),
-
-              // The Hub Section
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'The Hub',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    'Manage Assets',
-                    style: TextStyle(
-                      color: Color(0xFFFDB834),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16),
-
-              // Hub Cards
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Color(0xFF1E1E1E),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Color(0xFFFDB834),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Icon(
-                              Icons.account_balance_wallet,
-                              color: Colors.black,
-                              size: 24,
-                            ),
-                          ),
-                          SizedBox(height: 12),
-                          Text(
-                            'My Box',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 4),
-                          Text(
-                            'Personal vault & assets',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 11,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Color(0xFF1E1E1E),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Color(0xFFFDB834),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Icon(
-                              Icons.people,
-                              color: Colors.black,
-                              size: 24,
-                            ),
-                          ),
-                          SizedBox(height: 12),
-                          Text(
-                            'Community',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 4),
-                          Text(
-                            'DAO & Social voting',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 11,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 12),
-
-              // My Tontines
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Color(0xFF1E1E1E),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
+                Row(
                   children: [
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFDB834),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        Icons.group_work,
-                        color: Colors.black,
-                        size: 24,
-                      ),
+                    Icon(
+                      Icons.notifications_outlined,
+                      color: Colors.white,
+                      size: 24,
                     ),
-                    SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
+                    SizedBox(width: 20),
+                    Icon(Icons.help_outline, color: Colors.white, size: 24),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 24),
+
+            // Balance Card
+            Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xFF9B8358), Color(0xFF6B5740)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'My Tontines',
+                            'TOTAL BALANCE',
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            '000,000 XOF',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 14,
+                              fontSize: 28,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                          SizedBox(height: 4),
                           Text(
-                            '3 Active savings circles',
+                            '( 000.0 XLM ) 0.0%',
                             style: TextStyle(
-                              color: Colors.grey[600],
+                              color: Colors.white70,
                               fontSize: 12,
                             ),
                           ),
                         ],
                       ),
-                    ),
-                    Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
-                  ],
-                ),
-              ),
-              SizedBox(height: 24),
-
-              // Education Card
-              Container(
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Color(0xFF3D3420),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  children: [
-                    Icon(Icons.school, color: Color(0xFFFDB834), size: 48),
-                    SizedBox(height: 12),
-                    Text(
-                      'EDUCATION',
-                      style: TextStyle(
-                        color: Color(0xFFFDB834),
-                        fontSize: 11,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.5,
+                      Text(
+                        'STELLAR MAINNET',
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 9,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      'Academy & Demo',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      'Learn the ropes of DeFi and practice with a risk-free demo account before going live',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.grey[400],
-                        fontSize: 12,
-                        height: 1.4,
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF5C4A3A),
-                              foregroundColor: Colors.white,
-                              padding: EdgeInsets.symmetric(vertical: 12),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFFFDB834),
+                            foregroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
                             ),
-                            child: Text(
-                              'Daily Quiz',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
+                            padding: EdgeInsets.symmetric(vertical: 12),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.add_circle_outline, size: 18),
+                              SizedBox(width: 8),
+                              Text(
+                                'Deposit',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
-                        SizedBox(width: 12),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AcademyScreen(),
+                      ),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF9B8358),
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            padding: EdgeInsets.symmetric(vertical: 12),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.send, size: 18),
+                              SizedBox(width: 8),
+                              Text(
+                                'Send',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
                                 ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFFDB834),
-                              foregroundColor: Colors.black,
-                              padding: EdgeInsets.symmetric(vertical: 12),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
                               ),
-                            ),
-                            child: Text(
-                              'Take Quiz',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
-                              ),
-                            ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 24),
+
+            // The Hub Section
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'The Hub',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'Manage Assets',
+                  style: TextStyle(
+                    color: Color(0xFFFDB834),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+
+            // Hub Cards
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Color(0xFF1E1E1E),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Color(0xFFFDB834),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Icon(
+                            Icons.account_balance_wallet,
+                            color: Colors.black,
+                            size: 24,
+                          ),
+                        ),
+                        SizedBox(height: 12),
+                        Text(
+                          'My Box',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          'Personal vault & assets',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 11,
                           ),
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-              SizedBox(height: 24),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Color(0xFF1E1E1E),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Color(0xFFFDB834),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Icon(
+                            Icons.people,
+                            color: Colors.black,
+                            size: 24,
+                          ),
+                        ),
+                        SizedBox(height: 12),
+                        Text(
+                          'Community',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          'DAO & Social voting',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 11,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 12),
 
-              // Recent Activity
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // My Tontines
+            Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Color(0xFF1E1E1E),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
                 children: [
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFFDB834),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Icon(
+                      Icons.group_work,
+                      color: Colors.black,
+                      size: 24,
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'My Tontines',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          '3 Active savings circles',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
+                ],
+              ),
+            ),
+            SizedBox(height: 24),
+
+            // Education Card
+            Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Color(0xFF3D3420),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                children: [
+                  Icon(Icons.school, color: Color(0xFFFDB834), size: 48),
+                  SizedBox(height: 12),
                   Text(
-                    'Recent Activity',
+                    'EDUCATION',
+                    style: TextStyle(
+                      color: Color(0xFFFDB834),
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Academy & Demo',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  SizedBox(height: 8),
                   Text(
-                    'View History',
+                    'Learn the ropes of DeFi and practice with a risk-free demo account before going live',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Color(0xFFFDB834),
+                      color: Colors.grey[400],
                       fontSize: 12,
-                      fontWeight: FontWeight.w500,
+                      height: 1.4,
                     ),
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF5C4A3A),
+                            foregroundColor: Colors.white,
+                            padding: EdgeInsets.symmetric(vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text(
+                            'Daily Quiz',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AcademyScreen(),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFFFDB834),
+                            foregroundColor: Colors.black,
+                            padding: EdgeInsets.symmetric(vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: Text(
+                            'Take Quiz',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              SizedBox(height: 16),
-
-              // Activity Items
-              _buildActivityItem(
-                Icons.trending_up,
-                'Staking Rewards',
-                '24 Oct 2025 - 14:20',
-                '+000 XOF',
-                'View Hash',
-                true,
-              ),
-              SizedBox(height: 12),
-              _buildActivityItem(
-                Icons.arrow_upward,
-                'Outgoing transfer',
-                '24 Oct 2025 - 14:20',
-                '-0,000 XOF',
-                'View Hash',
-                false,
-              ),
-              SizedBox(height: 12),
-              _buildActivityItem(
-                Icons.account_balance,
-                'Bank deposit',
-                '24 Oct 2025 - 14:20',
-                '+00,000 XOF',
-                'View Hash',
-                true,
-              ),
-              SizedBox(height: 100),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Color(0xFF1E1E1E),
-        child: Container(
-          height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildNavItem(Icons.widgets_outlined, 'Cube', false),
-              _buildNavItem(Icons.people_outline, 'Community', false),
-              SizedBox(width: 60), // Espace pour le bouton central
-              _buildNavItem(
-                Icons.account_balance_wallet_outlined,
-                'Wallet',
-                false,
-              ),
-              _buildNavItem(Icons.settings_outlined, 'Settings', false),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: Container(
-        width: 60,
-        height: 60,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: LinearGradient(
-            colors: [Color(0xFFFDB834), Color(0xFFE8A825)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Color(0xFFFDB834).withOpacity(0.4),
-              blurRadius: 15,
-              spreadRadius: 2,
-              offset: Offset(0, 5),
             ),
+            SizedBox(height: 24),
+
+            // Recent Activity
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Recent Activity',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'View History',
+                  style: TextStyle(
+                    color: Color(0xFFFDB834),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+
+            // Activity Items
+            _buildActivityItem(
+              Icons.trending_up,
+              'Staking Rewards',
+              '24 Oct 2025 - 14:20',
+              '+000 XOF',
+              'View Hash',
+              true,
+            ),
+            SizedBox(height: 12),
+            _buildActivityItem(
+              Icons.arrow_upward,
+              'Outgoing transfer',
+              '24 Oct 2025 - 14:20',
+              '-0,000 XOF',
+              'View Hash',
+              false,
+            ),
+            SizedBox(height: 12),
+            _buildActivityItem(
+              Icons.account_balance,
+              'Bank deposit',
+              '24 Oct 2025 - 14:20',
+              '+00,000 XOF',
+              'View Hash',
+              true,
+            ),
+            SizedBox(height: 100),
           ],
         ),
-        child: Icon(Icons.add, color: Colors.black, size: 32),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 

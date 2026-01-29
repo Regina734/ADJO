@@ -1,0 +1,12 @@
+<!-- Placeholder SVG pour smart-contracts.jpg -->
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#1a1a2e"/>
+  <text x="200" y="150" font-size="28" font-family="Arial" fill="#fdb834" text-anchor="middle" font-weight="bold">
+    SMART CONTRACTS
+  </text>
+  <rect x="80" y="80" width="60" height="60" fill="#9b8358" stroke="#fdb834" stroke-width="2" rx="5"/>
+  <rect x="160" y="80" width="60" height="60" fill="#9b8358" stroke="#fdb834" stroke-width="2" rx="5"/>
+  <rect x="240" y="80" width="60" height="60" fill="#9b8358" stroke="#fdb834" stroke-width="2" rx="5"/>
+  <line x1="110" y1="140" x2="160" y2="140" stroke="#fdb834" stroke-width="2"/>
+  <line x1="220" y1="140" x2="270" y2="140" stroke="#fdb834" stroke-width="2"/>
+</svg>

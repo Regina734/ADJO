@@ -1,0 +1,11 @@
+<!-- Placeholder SVG pour security.jpg -->
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#1a1a2e"/>
+  <text x="200" y="150" font-size="32" font-family="Arial" fill="#fdb834" text-anchor="middle" font-weight="bold">
+    SECURITY
+  </text>
+  <rect x="120" y="70" width="160" height="130" fill="none" stroke="#fdb834" stroke-width="3" rx="10"/>
+  <circle cx="200" cy="110" r="15" fill="#fdb834"/>
+  <path d="M 200 125 L 200 150" stroke="#fdb834" stroke-width="2"/>
+  <path d="M 185 150 L 215 150" stroke="#fdb834" stroke-width="2"/>
+</svg>

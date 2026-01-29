@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:adjo/services/tontine_service.dart';
 
 class CreateTontineScreen extends StatefulWidget {
   const CreateTontineScreen({Key? key}) : super(key: key);
@@ -448,8 +449,7 @@ class _CreateTontineScreenState extends State<CreateTontineScreen> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/choose-members'),
+                    onPressed: () => _createTontine(),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFFDB834),
                       foregroundColor: Colors.black,
@@ -475,6 +475,59 @@ class _CreateTontineScreenState extends State<CreateTontineScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _createTontine() async {
+    // Validation
+    if (nameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter tontine name')),
+      );
+      return;
+    }
+
+    if (amountController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter contribution amount')),
+      );
+      return;
+    }
+
+    if (membersController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter number of members')),
+      );
+      return;
+    }
+
+    try {
+      final tontineService = TontineService();
+
+      // Créer la tontine via le service
+      await tontineService.createTontine(
+        name: nameController.text,
+        amount: double.parse(amountController.text),
+        frequency: selectedFrequency,
+        maxMembers: int.parse(membersController.text),
+      );
+
+      // Afficher succès
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('✓ Tontine créée avec succès!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+
+        // Retour à la liste des tontines
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: ${e.toString()}')));
+    }
   }
 
   Widget _buildAmountChip(String label) {

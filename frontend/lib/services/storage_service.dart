@@ -42,4 +42,15 @@ class StorageService {
   String? getSelectedFeature() {
     return _prefs?.getString('selected_feature');
   }
+
+  // ✅ NOUVELLES MÉTHODES pour AuthService
+  // Generic string getter
+  String? getString(String key) {
+    return _prefs?.getString(key);
+  }
+
+  // Generic string setter
+  Future<void> setString(String key, String value) async {
+    await _prefs?.setString(key, value);
+  }
 }

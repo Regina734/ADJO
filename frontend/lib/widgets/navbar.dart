@@ -15,7 +15,7 @@ class AppBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 85,
+      height: 75,
       decoration: BoxDecoration(
         color: const Color(0xFF1A1A1A),
         borderRadius: const BorderRadius.only(
@@ -31,53 +31,53 @@ class AppBottomNavBar extends StatelessWidget {
         ],
       ),
       child: Stack(
-        clipBehavior: Clip.none,
+        clipBehavior: Clip.hardEdge,
         alignment: Alignment.topCenter,
         children: [
-          // Les items de navigation
+          // Navigation items
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _buildNavItem(
-                  icon: Icons.home_outlined,
+                  icon: Icons.inbox_rounded,
                   label: 'Box',
-                  isActive: currentIndex == 0,
-                  onTap: () => onTap(0),
-                ),
-                _buildNavItem(
-                  icon: Icons.people_outline,
-                  label: 'Community',
-                  isActive: currentIndex == 1,
-                  onTap: () => onTap(1),
-                ),
-                // Espace pour le FAB
-                const SizedBox(width: 60),
-                _buildNavItem(
-                  icon: Icons.card_giftcard_outlined,
-                  label: 'Tontine',
                   isActive: currentIndex == 2,
                   onTap: () => onTap(2),
                 ),
                 _buildNavItem(
-                  icon: Icons.settings_outlined,
-                  label: 'Setting',
+                  icon: Icons.people_rounded,
+                  label: 'Community',
+                  isActive: currentIndex == 1,
+                  onTap: () => onTap(1),
+                ),
+                // Space for FAB
+                const SizedBox(width: 60),
+                _buildNavItem(
+                  icon: Icons.account_balance_wallet_rounded,
+                  label: 'Tontine',
                   isActive: currentIndex == 3,
                   onTap: () => onTap(3),
+                ),
+                _buildNavItem(
+                  icon: Icons.settings_rounded,
+                  label: 'Settings',
+                  isActive: currentIndex == 4,
+                  onTap: () => onTap(4),
                 ),
               ],
             ),
           ),
 
-          // FloatingActionButton central
+          // Central FAB button
           Positioned(
-            top: -30,
+            top: -25,
             child: GestureDetector(
               onTap: onAddPressed ?? () {},
               child: Container(
-                width: 70,
-                height: 70,
+                width: 65,
+                height: 65,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: const Color(0xFFFDB834),
@@ -104,31 +104,26 @@ class AppBottomNavBar extends StatelessWidget {
     required bool isActive,
     required VoidCallback onTap,
   }) {
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            color: isActive ? const Color(0xFFFDB834) : Colors.grey[600],
+            size: 24,
+          ),
+          const SizedBox(height: 6),
+          Text(
+            label,
+            style: TextStyle(
               color: isActive ? const Color(0xFFFDB834) : Colors.grey[600],
-              size: 26,
+              fontSize: 11,
+              fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
             ),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: TextStyle(
-                color: isActive ? const Color(0xFFFDB834) : Colors.grey[600],
-                fontSize: 12,
-                fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

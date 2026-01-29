@@ -1,4 +1,6 @@
+import 'package:adjo/screens/dashboard/dashboard_screen.dart';
 import 'package:adjo/screens/dashboard/home_screen.dart';
+import 'package:adjo/screens/auth/splash_screen.dart';
 import 'package:adjo/screens/onboarding/Welcome_screen.dart';
 import 'package:adjo/screens/onboarding/feature/feature_configure_box.dart';
 import 'package:adjo/screens/onboarding/feature/feature_selection.dart';
@@ -29,6 +31,7 @@ import 'package:flutter/material.dart';
 
 class AppRouter {
   // Routes constants
+  static const String splash = '/splash';
   static const String welcome = '/';
   static const String language = '/language';
   static const String featureSelection = '/feature-selection';
@@ -69,6 +72,10 @@ class AppRouter {
 
   static Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
+      // Auth
+      case splash:
+        return _buildRoute(const SplashScreen());
+
       // Onboarding
       case welcome:
         return _buildRoute(WelcomeScreen());
@@ -97,62 +104,62 @@ class AppRouter {
 
       // Dashboard
       case dashboard:
-        return _buildRoute(HomeScreen());
+        return _buildRoute(const DashboardScreen());
 
       // My Box
       case myBox:
-        return _buildRoute(MyBoxScreen());
+        return _buildRoute(const DashboardScreen(initialIndex: 2));
 
       case configureBox:
-        return _buildRoute(ConfigureBoxScreen());
+        return _buildRoute(const ConfigureBoxScreen());
 
       case staking:
-        return _buildRoute(MyBoxScreen());
+        return _buildRoute(const MyBoxScreen());
 
       case sendFunds:
-        return _buildRoute(SendFundsScreen());
+        return _buildRoute(const SendFundsScreen());
 
       case transactionSuccess:
-        return _buildRoute(MyBoxScreen());
+        return _buildRoute(const MyBoxScreen());
 
       // Tontine
       case myTontine:
-        return _buildRoute(MyTontineScreen());
+        return _buildRoute(const DashboardScreen(initialIndex: 3));
 
       case allTontines:
-        return _buildRoute(AllTontineScreen());
+        return _buildRoute(const AllTontineScreen());
 
       case createTontine:
-        return _buildRoute(CreateTontineScreen());
+        return _buildRoute(const CreateTontineScreen());
 
       case chooseMembers:
-        return _buildRoute(ChooseMembersScreen());
+        return _buildRoute(const ChooseMembersScreen());
 
       case detailMembers:
-        return _buildRoute(DetailMembersScreen());
+        return _buildRoute(const DetailMembersScreen());
 
       case cautionDetails:
-        return _buildRoute(CautionDetailsScreen());
+        return _buildRoute(const CautionDetailsScreen());
 
       case depositCaution:
-        return _buildRoute(DepositCautionScreen());
+        return _buildRoute(const DepositCautionScreen());
 
       case successTontine:
-        return _buildRoute(SuccessTontineScreen());
+        return _buildRoute(const SuccessTontineScreen());
 
       case tontineDetails:
-        return _buildRoute(MyTontineScreen());
+        return _buildRoute(const MyTontineScreen());
 
       // Community
       case myCommunity:
-        return _buildRoute(MyCommunityScreen());
+        return _buildRoute(const DashboardScreen(initialIndex: 1));
 
       case createCommunity:
       case createCommunityOld:
-        return _buildRoute(CreateCommunityScreen());
+        return _buildRoute(const CreateCommunityScreen());
 
       case validateCommunity:
-        return _buildRoute(ValidateCommunityScreen());
+        return _buildRoute(const ValidateCommunityScreen());
 
       // Academy
       case academy:
@@ -160,19 +167,19 @@ class AppRouter {
 
       // Settings
       case settings:
-        return _buildRoute(SettingsScreen());
+        return _buildRoute(const DashboardScreen(initialIndex: 4));
 
       case upgradePremium:
-        return _buildRoute(UpgradePremiumModal());
+        return _buildRoute(const UpgradePremiumModal());
 
       case editProfile:
-        return _buildRoute(EditProfileScreen());
+        return _buildRoute(const EditProfileScreen());
 
       case stakingSimulation:
-        return _buildRoute(StakingSimulationScreen());
+        return _buildRoute(const StakingSimulationScreen());
 
       case dailyQuiz:
-        return _buildRoute(DailyQuizScreen());
+        return _buildRoute(const DailyQuizScreen());
 
       default:
         return _buildRoute(
