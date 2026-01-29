@@ -492,27 +492,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, bool isSelected) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(
-          icon,
-          color: isSelected ? Color(0xFFFDB834) : Colors.grey[600],
-          size: 24,
-        ),
-        SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? Color(0xFFFDB834) : Colors.grey[600],
-            fontSize: 11,
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _buildActivityItem(
     IconData icon,
     String title,

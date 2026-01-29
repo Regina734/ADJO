@@ -96,7 +96,9 @@ class _MyTontineScreenState extends State<MyTontineScreen> {
   }
 
   Widget _buildTontineCard(Tontine tontine) {
-    final progress = (tontine.currentAmount ?? 0) / tontine.targetAmount;
+    final totalCollected = tontine.amount * tontine.currentMembers;
+    final targetTotal = tontine.amount * tontine.maxMembers;
+    final progress = totalCollected / targetTotal;
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
@@ -139,7 +141,7 @@ class _MyTontineScreenState extends State<MyTontineScreen> {
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
-                  '${tontine.members?.length ?? 0}/${tontine.maxMembers} members',
+                  '${tontine.currentMembers}/${tontine.maxMembers} members',
                   style: const TextStyle(
                     color: Color(0xFFFDB834),
                     fontSize: 9,
@@ -168,7 +170,7 @@ class _MyTontineScreenState extends State<MyTontineScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '\$${(tontine.currentAmount ?? 0).toStringAsFixed(2)}',
+                '\$${(tontine.amount * tontine.currentMembers).toStringAsFixed(2)}',
                 style: const TextStyle(
                   color: Color(0xFFFDB834),
                   fontSize: 12,
@@ -176,7 +178,7 @@ class _MyTontineScreenState extends State<MyTontineScreen> {
                 ),
               ),
               Text(
-                '\$${tontine.targetAmount.toStringAsFixed(2)}',
+                '\$${(tontine.amount * tontine.maxMembers).toStringAsFixed(2)}',
                 style: const TextStyle(color: Colors.grey, fontSize: 12),
               ),
             ],

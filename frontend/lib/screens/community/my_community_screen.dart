@@ -27,7 +27,7 @@ class _MyCommunityScreenState extends State<MyCommunityScreen> {
           ),
           const SizedBox(height: 20),
 
-          // Create Community Button
+          // Create Tontine Button
           SizedBox(
             width: double.infinity,
             child: ElevatedButton.icon(
@@ -60,12 +60,12 @@ class _MyCommunityScreenState extends State<MyCommunityScreen> {
             future: _tontineService.getAllTontines(),
             builder: (context, snapshot) {
               var totalAmount = 0.0;
-              var totalContributions = 0;
+              var totalMembers = 0;
 
               if (snapshot.hasData) {
                 for (var tontine in snapshot.data!) {
-                  totalAmount += tontine.currentAmount ?? 0;
-                  totalContributions += tontine.members?.length ?? 0;
+                  totalAmount += tontine.amount * tontine.currentMembers;
+                  totalMembers += tontine.currentMembers;
                 }
               }
 
@@ -129,7 +129,7 @@ class _MyCommunityScreenState extends State<MyCommunityScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Active Contributions',
+                            'Active Members',
                             style: TextStyle(
                               color: Colors.grey[600],
                               fontSize: 10,
@@ -138,7 +138,7 @@ class _MyCommunityScreenState extends State<MyCommunityScreen> {
                           ),
                           const SizedBox(height: 6),
                           Text(
-                            totalContributions.toString(),
+                            totalMembers.toString(),
                             style: const TextStyle(
                               color: Color(0xFFFDB834),
                               fontSize: 16,
@@ -162,7 +162,7 @@ class _MyCommunityScreenState extends State<MyCommunityScreen> {
           ),
           const SizedBox(height: 20),
 
-          // My Communities/Tontines List
+          // My Tontines List
           const Text(
             'My Tontines',
             style: TextStyle(
@@ -181,34 +181,36 @@ class _MyCommunityScreenState extends State<MyCommunityScreen> {
 
               if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return Center(
-                  child: Column(
-                    children: [
-                      Icon(
-                        Icons.people_outline,
-                        size: 50,
-                        color: Colors.grey[600],
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        'No tontines yet',
-                        style: TextStyle(color: Colors.grey[400], fontSize: 14),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 40),
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.people_outline,
+                          size: 50,
+                          color: Colors.grey[600],
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          'No tontines yet',
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }
 
-              return Column(
-                children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      return _buildCommunityCard(snapshot.data![index]);
-                    },
-                  ),
-                ],
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return _buildTontineCard(snapshot.data![index]);
+                },
               );
             },
           ),
@@ -217,7 +219,11 @@ class _MyCommunityScreenState extends State<MyCommunityScreen> {
     );
   }
 
-  Widget _buildCommunityCard(Tontine tontine) {
+  Widget _buildTontineCard(Tontine tontine) {
+    final totalCollected = tontine.amount * tontine.currentMembers;
+    final targetTotal = tontine.amount * tontine.maxMembers;
+    final progress = (targetTotal > 0) ? totalCollected / targetTotal : 0.0;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
@@ -246,7 +252,7 @@ class _MyCommunityScreenState extends State<MyCommunityScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${tontine.frequency} • ${tontine.members?.length ?? 0} members',
+                      '${tontine.frequency} • ${tontine.currentMembers} members',
                       style: const TextStyle(color: Colors.grey, fontSize: 10),
                     ),
                   ],
@@ -262,7 +268,7 @@ class _MyCommunityScreenState extends State<MyCommunityScreen> {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  '\$${tontine.currentAmount?.toStringAsFixed(0) ?? 0}',
+                  '\$${totalCollected.toStringAsFixed(0)}',
                   style: const TextStyle(
                     color: Color(0xFFFDB834),
                     fontWeight: FontWeight.bold,
@@ -276,8 +282,7 @@ class _MyCommunityScreenState extends State<MyCommunityScreen> {
           ClipRRect(
             borderRadius: BorderRadius.circular(6),
             child: LinearProgressIndicator(
-              value: ((tontine.currentAmount ?? 0) / tontine.targetAmount)
-                  .clamp(0.0, 1.0),
+              value: progress.clamp(0.0, 1.0),
               minHeight: 6,
               backgroundColor: Colors.grey[800],
               valueColor: const AlwaysStoppedAnimation<Color>(
