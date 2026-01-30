@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class DepositCautionScreen extends StatelessWidget {
+class DepositCautionScreen extends StatefulWidget {
   const DepositCautionScreen({Key? key}) : super(key: key);
 
+  @override
+  State<DepositCautionScreen> createState() => _DepositCautionScreenState();
+}
+
+class _DepositCautionScreenState extends State<DepositCautionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +32,7 @@ class DepositCautionScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 12),
             const Text(

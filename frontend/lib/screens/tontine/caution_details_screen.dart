@@ -1,3 +1,4 @@
+import 'package:adjo/screens/tontine/deposit_caution_screen.dart';
 import 'package:flutter/material.dart';
 
 class CautionDetailsScreen extends StatelessWidget {
@@ -27,7 +28,7 @@ class CautionDetailsScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 12),
             const Text(
@@ -120,7 +121,7 @@ class CautionDetailsScreen extends StatelessWidget {
                 border: Border.all(color: const Color(0xFFFDB834), width: 1),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
                     children: [
@@ -222,8 +223,24 @@ class CautionDetailsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 14),
+
             ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/deposit-caution'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const DepositCautionScreen(),
+                  ),
+                );
+                /**ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'Navigation vers Deposit - Créer d\'abord deposit_caution_screen.dart',
+                    ),
+                    backgroundColor: Colors.orange,
+                  ),
+                );*/
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFFDB834),
                 foregroundColor: Colors.black,

@@ -1,3 +1,4 @@
+import 'package:adjo/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:adjo/app_router.dart';
 
@@ -123,7 +124,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     keyboardType: TextInputType.phone,
                     style: const TextStyle(color: Colors.white, fontSize: 14),
                     decoration: InputDecoration(
-                      hintText: '+1 234 567 8900',
+                      hintText: '+229 0161762591',
                       hintStyle: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 12,
@@ -349,7 +350,12 @@ class _SignupScreenState extends State<SignupScreen> {
                           WidgetSpan(
                             child: GestureDetector(
                               onTap: () {
-                                AppRouter.navigateTo(context, 'login');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginScreen(),
+                                  ),
+                                );
                               },
                               child: const Text(
                                 'Log In',

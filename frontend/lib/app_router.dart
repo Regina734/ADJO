@@ -13,6 +13,7 @@ import 'package:adjo/screens/tontine/choose_members_screen.dart';
 import 'package:adjo/screens/tontine/detail_members_screen.dart';
 import 'package:adjo/screens/tontine/caution_details_screen.dart';
 import 'package:adjo/screens/tontine/deposit_caution_screen.dart';
+import 'package:adjo/screens/tontine/my_tontine_screen.dart';
 import 'package:adjo/screens/tontine/success_tontine_screen.dart';
 import 'package:adjo/screens/settings/upgrade_premium_modal.dart';
 import 'package:adjo/screens/settings/profile_screen.dart';
@@ -129,10 +130,10 @@ class AppRouter {
         return _buildRoute(const CreateTontineScreen());
 
       case chooseMembers:
-        return _buildRoute(const ChooseMembersScreen());
+        return _buildRoute(const ChooseMembersScreen(maxMembers: 12));
 
       case detailMembers:
-        return _buildRoute(const DetailMembersScreen());
+        return _buildRoute(const DetailMembersScreen(memberData: {}));
 
       case cautionDetails:
         return _buildRoute(const CautionDetailsScreen());

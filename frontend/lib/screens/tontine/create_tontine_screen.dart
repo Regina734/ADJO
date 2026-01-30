@@ -1,3 +1,6 @@
+import 'package:adjo/screens/tontine/caution_details_screen.dart';
+import 'package:adjo/screens/tontine/choose_members_screen.dart';
+import 'package:adjo/screens/tontine/detail_members_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:adjo/services/tontine_service.dart';
 
@@ -10,18 +13,23 @@ class CreateTontineScreen extends StatefulWidget {
 
 class _CreateTontineScreenState extends State<CreateTontineScreen> {
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController amountController = TextEditingController();
-  final TextEditingController frequencyController = TextEditingController();
-  final TextEditingController durationController = TextEditingController();
-  final TextEditingController membersController = TextEditingController();
+  final TextEditingController amountController = TextEditingController(
+    text: '500000',
+  );
+  final TextEditingController durationController = TextEditingController(
+    text: '12',
+  );
+  final TextEditingController membersController = TextEditingController(
+    text: '12',
+  );
 
-  String selectedFrequency = 'weekly';
+  String selectedFrequency = 'Weekly';
+  List<Map<String, dynamic>> invitedParticipants = [];
 
   @override
   void dispose() {
     nameController.dispose();
     amountController.dispose();
-    frequencyController.dispose();
     durationController.dispose();
     membersController.dispose();
     super.dispose();
@@ -42,443 +50,572 @@ class _CreateTontineScreenState extends State<CreateTontineScreen> {
           'New Tontine',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(
-              Icons.notifications_none,
-              color: Colors.white,
-              size: 20,
-            ),
+            icon: const Icon(Icons.notifications_outlined, color: Colors.white),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.info_outline, color: Colors.white, size: 20),
+            icon: const Icon(Icons.access_time, color: Colors.white),
             onPressed: () {},
           ),
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 8),
-            const Text(
-              'Configure the basic settings for your savings group.',
-              style: TextStyle(color: Colors.grey, fontSize: 11, height: 1.4),
-            ),
-            const SizedBox(height: 12),
-            const Text(
-              'Name of the tontine',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 11,
-                fontWeight: FontWeight.bold,
+            // Description
+            const Center(
+              child: Text(
+                'Configure the basic settings for your\nsavings group.',
+                style: TextStyle(color: Colors.grey, fontSize: 14, height: 1.5),
+                textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 24),
+
+            // Name field
             Container(
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFF3A3A2A),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: const Color(0xFFFDB834), width: 1),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: TextField(
-                controller: nameController,
-                style: const TextStyle(color: Colors.white, fontSize: 11),
-                decoration: InputDecoration(
-                  hintText: 'Ex. Spain trade 2024',
-                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: 10),
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  suffixIcon: const Icon(
-                    Icons.edit,
-                    color: Color(0xFFFDB834),
-                    size: 16,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            const Text(
-              'Contribution amount',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 11,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFF1A1A1A),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey[800]!, width: 1),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: TextField(
-                controller: amountController,
-                style: const TextStyle(color: Colors.white, fontSize: 11),
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: '500000',
-                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: 10),
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  suffixText: 'XOF',
-                  suffixStyle: const TextStyle(color: Colors.grey, fontSize: 9),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  _buildAmountChip('10K'),
-                  const SizedBox(width: 8),
-                  _buildAmountChip('25K'),
-                  const SizedBox(width: 8),
-                  _buildAmountChip('50K'),
-                  const SizedBox(width: 8),
-                  _buildAmountChip('100K'),
-                ],
-              ),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Frequency',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF3A3A2A),
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: const Color(0xFFFDB834),
-                            width: 1,
-                          ),
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: DropdownButton<String>(
-                          value: selectedFrequency,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                          ),
-                          dropdownColor: const Color(0xFF3A3A2A),
-                          underline: Container(),
-                          isExpanded: true,
-                          items: const [
-                            DropdownMenuItem(
-                              value: 'weekly',
-                              child: Text('Weekly'),
-                            ),
-                            DropdownMenuItem(
-                              value: 'monthly',
-                              child: Text('Monthly'),
-                            ),
-                          ],
-                          onChanged: (value) => setState(
-                            () => selectedFrequency = value ?? 'weekly',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Total duration',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF1A1A1A),
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: Colors.grey[800]!,
-                            width: 1,
-                          ),
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: TextField(
-                          controller: durationController,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                          ),
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                            hintText: '12',
-                            hintStyle: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 10,
-                            ),
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10,
-                            ),
-                            suffixText: 'CYCLES',
-                            suffixStyle: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 8,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            const Text(
-              'Invite participants',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 11,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: const Color(0xFF3A3A2A),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey[800]!, width: 1),
+                color: const Color(0xFF3D3D2D),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Max of members',
-                    style: TextStyle(color: Colors.grey, fontSize: 10),
+                    'Name of the tontine',
+                    style: TextStyle(color: Color(0xFFB8A588), fontSize: 12),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: nameController,
+                    style: const TextStyle(color: Colors.white, fontSize: 14),
+                    decoration: const InputDecoration(
+                      hintText: 'Ex: Spain trade 2024',
+                      hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Contribution amount
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1A1A1A),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.grey[800]!),
+              ),
+              child: Column(
+                children: [
+                  const Text(
+                    'Contribution amount',
+                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                  ),
+                  const SizedBox(height: 12),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Expanded(
+                      SizedBox(
+                        width: 150,
                         child: TextField(
-                          controller: membersController,
+                          controller: amountController,
                           style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
+                            color: Color(0xFFFDB834),
+                            fontSize: 36,
+                            fontWeight: FontWeight.bold,
                           ),
-                          decoration: InputDecoration(
-                            hintText: '12',
-                            hintStyle: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 10,
-                            ),
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 8,
-                            ),
+                            contentPadding: EdgeInsets.zero,
                           ),
                         ),
                       ),
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          ' XOF',
+                          style: TextStyle(color: Colors.grey, fontSize: 14),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  // Amount chips
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _buildAmountChip('10K', false),
                       const SizedBox(width: 8),
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          SizedBox(
-                            width: 60,
-                            height: 32,
-                            child: Row(
-                              children: [
-                                for (int i = 0; i < 3; i++)
-                                  Positioned(
-                                    left: i * 16,
-                                    child: CircleAvatar(
-                                      radius: 12,
-                                      backgroundColor: const Color(0xFFFDB834),
-                                      child: Text(
-                                        '${i + 1}',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 8,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            ),
+                      _buildAmountChip('25K', false),
+                      const SizedBox(width: 8),
+                      _buildAmountChip('50K', true),
+                      const SizedBox(width: 8),
+                      _buildAmountChip('100K', false),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Frequency and Duration
+            Row(
+              children: [
+                // Frequency
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1A1A1A),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Frequency',
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ),
+                        const SizedBox(height: 12),
+                        _buildFrequencyOption('Weekly', true),
+                        const SizedBox(height: 8),
+                        _buildFrequencyOption('Month', false),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                // Total duration
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1A1A1A),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Total duration',
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ),
+                        const SizedBox(height: 12),
+                        TextField(
+                          controller: durationController,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Positioned(
-                            right: -4,
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                        ),
+                        const Text(
+                          'CYCLES',
+                          style: TextStyle(color: Colors.grey, fontSize: 10),
+                        ),
+                        const SizedBox(height: 8),
+                        Container(
+                          height: 4,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[800],
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                          child: FractionallySizedBox(
+                            widthFactor: 0.5,
                             child: Container(
-                              width: 20,
-                              height: 20,
                               decoration: BoxDecoration(
                                 color: const Color(0xFFFDB834),
-                                shape: BoxShape.circle,
+                                borderRadius: BorderRadius.circular(2),
                               ),
-                              child: const Center(
-                                child: Text(
-                                  '+10',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 7,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+
+            GestureDetector(
+              onTap: () async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChooseMembersScreen(
+                      maxMembers: int.tryParse(membersController.text) ?? 12,
+                    ),
+                  ),
+                );
+
+                if (result != null && result is List) {
+                  setState(() {
+                    invitedParticipants = List<Map<String, dynamic>>.from(
+                      result,
+                    );
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('${result.length} participants invited!'),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                }
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      const Text(
+                        'Invite participants',
+                        style: TextStyle(
+                          color: Color(0xFFB8A588),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      if (invitedParticipants.isNotEmpty) ...[
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFDB834),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            '${invitedParticipants.length}',
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.grey[600],
+                    size: 16,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1A1A1A),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Max of members',
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ),
+                        const SizedBox(height: 8),
+                        TextField(
+                          controller: membersController,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            hintText: '12 participants',
+                            hintStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Avatars
+                  SizedBox(
+                    width: 100,
+                    height: 40,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          left: 0,
+                          child: CircleAvatar(
+                            radius: 18,
+                            backgroundColor: const Color(0xFFFDB834),
+                            child: const Icon(
+                              Icons.person,
+                              color: Colors.black,
+                              size: 16,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          left: 24,
+                          child: CircleAvatar(
+                            radius: 18,
+                            backgroundColor: const Color(0xFFFDB834),
+                            child: const Icon(
+                              Icons.person,
+                              color: Colors.black,
+                              size: 16,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          left: 48,
+                          child: CircleAvatar(
+                            radius: 18,
+                            backgroundColor: const Color(0xFFFDB834),
+                            child: const Icon(
+                              Icons.person,
+                              color: Colors.black,
+                              size: 16,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          right: 0,
+                          child: CircleAvatar(
+                            radius: 18,
+                            backgroundColor: const Color(0xFFFDB834),
+                            child: Text(
+                              '+${int.tryParse(membersController.text) ?? 12}',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
                               ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+
+            // Total collected
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Total collected per cycle',
+                  style: TextStyle(color: Colors.grey, fontSize: 14),
+                ),
+                Text(
+                  '600.000 XOF',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+
+            // Deposit and buttons
+            Row(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CautionDetailsScreen(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFDB834),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Deposit',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          const Text(
+                            '20%',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          const Text(
+                            'See Details',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              decoration: TextDecoration.underline,
                             ),
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 12),
-            const Text(
-              'Total collected per cycle',
-              style: TextStyle(color: Colors.white, fontSize: 11),
-            ),
-            const SizedBox(height: 4),
-            const Text(
-              '600.000 XOF',
-              style: TextStyle(
-                color: Color(0xFFFDB834),
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 14),
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: const Color(0xFFFDB834).withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: const Color(0xFFFDB834), width: 1),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Deposit',
-                    style: TextStyle(
-                      color: Color(0xFFFDB834),
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  const Text(
-                    '20%',
-                    style: TextStyle(
-                      color: Color(0xFFFDB834),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  GestureDetector(
-                    onTap: () {},
-                    child: const Text(
-                      'See Details',
-                      style: TextStyle(
-                        color: Color(0xFFFDB834),
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 14),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: () => Navigator.pop(context),
-                    style: OutlinedButton.styleFrom(
-                      side: const BorderSide(
-                        color: Color(0xFFFDB834),
-                        width: 1,
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: const Text(
-                      'Delete',
-                      style: TextStyle(
-                        color: Color(0xFFFDB834),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 11,
-                      ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 12),
+                // Buttons column
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: () => _createTontine(),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFDB834),
-                      foregroundColor: Colors.black,
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () => _createTontine(),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFFDB834),
+                            foregroundColor: Colors.black,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            elevation: 0,
+                          ),
+                          child: const Text(
+                            'Create',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
                       ),
-                      elevation: 0,
-                    ),
-                    child: const Text(
-                      'Create',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 11,
+                      const SizedBox(height: 8),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () => Navigator.pop(context),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFFDB834),
+                            foregroundColor: Colors.black,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            elevation: 0,
+                          ),
+                          child: const Text(
+                            'Delete',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 20),
           ],
         ),
       ),
     );
   }
 
+  Widget _buildAmountChip(String label, bool isSelected) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: isSelected ? const Color(0xFFFDB834) : Colors.transparent,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: isSelected ? const Color(0xFFFDB834) : Colors.grey,
+        ),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: isSelected ? Colors.black : Colors.grey,
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFrequencyOption(String label, bool isSelected) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: isSelected ? const Color(0xFFFDB834) : Colors.transparent,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              color: isSelected ? Colors.black : Colors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          if (isSelected)
+            const Icon(Icons.check_circle, color: Colors.black, size: 20),
+        ],
+      ),
+    );
+  }
+
   Future<void> _createTontine() async {
-    // Validation
     if (nameController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please enter tontine name')),
@@ -486,32 +623,16 @@ class _CreateTontineScreenState extends State<CreateTontineScreen> {
       return;
     }
 
-    if (amountController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter contribution amount')),
-      );
-      return;
-    }
-
-    if (membersController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter number of members')),
-      );
-      return;
-    }
-
     try {
       final tontineService = TontineService();
 
-      // Créer la tontine via le service
       await tontineService.createTontine(
         name: nameController.text,
         amount: double.parse(amountController.text),
-        frequency: selectedFrequency,
+        frequency: selectedFrequency.toLowerCase(),
         maxMembers: int.parse(membersController.text),
       );
 
-      // Afficher succès
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -520,7 +641,6 @@ class _CreateTontineScreenState extends State<CreateTontineScreen> {
           ),
         );
 
-        // Retour à la liste des tontines
         Navigator.pop(context);
       }
     } catch (e) {
@@ -528,24 +648,5 @@ class _CreateTontineScreenState extends State<CreateTontineScreen> {
         context,
       ).showSnackBar(SnackBar(content: Text('Error: ${e.toString()}')));
     }
-  }
-
-  Widget _buildAmountChip(String label) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: const Color(0xFFFDB834), width: 1),
-      ),
-      child: Text(
-        label,
-        style: const TextStyle(
-          color: Color(0xFFFDB834),
-          fontSize: 10,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
   }
 }
