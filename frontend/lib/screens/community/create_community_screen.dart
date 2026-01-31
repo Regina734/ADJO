@@ -8,23 +8,23 @@ class CreateCommunityScreen extends StatefulWidget {
 }
 
 class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController targetController = TextEditingController();
-  final TextEditingController deadlineController = TextEditingController();
-  final TextEditingController suggestionController = TextEditingController();
-  final TextEditingController beneficiaryController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _targetController = TextEditingController();
+  final TextEditingController _deadlineController = TextEditingController();
+  final TextEditingController _suggestionController = TextEditingController();
+  final TextEditingController _beneficiaryController = TextEditingController();
 
   String selectedVisibility = 'private';
 
   @override
   void dispose() {
-    nameController.dispose();
-    descriptionController.dispose();
-    targetController.dispose();
-    deadlineController.dispose();
-    suggestionController.dispose();
-    beneficiaryController.dispose();
+    _nameController.dispose();
+    _descriptionController.dispose();
+    _targetController.dispose();
+    _deadlineController.dispose();
+    _suggestionController.dispose();
+    _beneficiaryController.dispose();
     super.dispose();
   }
 
@@ -48,155 +48,188 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
           ),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_none, color: Colors.white),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.more_vert, color: Colors.white),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Define how your community supports its members and makes decisions.',
+              'Define how your community supports its\nmembers and makes decisions.',
               style: TextStyle(color: Colors.white, fontSize: 12, height: 1.4),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 20),
 
+            // NAME OF COMMUNITY
             const Text(
-              'Name of Community',
+              'NAME OF COMMUNITY', // MAJUSCULES comme l'image
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 12,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.bold, // Plus gras
               ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
-                color: const Color(0xFF3A3A2A),
+                color: const Color(0xFF4A4A3A), // Gris foncé comme l'image
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: const Color(0xFFFDB834), width: 1),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: TextField(
-                controller: nameController,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+                controller: _nameController,
+                style: const TextStyle(color: Colors.white, fontSize: 14),
                 decoration: InputDecoration(
-                  hintText: 'Ex. Business Savings',
-                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: 11),
+                  hintText: 'Ex: Business Savings',
+                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: 13),
                   border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  suffixIcon: const Icon(
-                    Icons.edit,
-                    color: Color(0xFFFDB834),
-                    size: 16,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
+                  ),
+                  suffixIcon: const Padding(
+                    padding: EdgeInsets.only(right: 12),
+                    child: Icon(Icons.edit, color: Colors.white, size: 18),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
 
+            // DESCRIPTION OF THE GOAL
             const Text(
-              'Description of the goal',
+              'DESCRIPTION OF THE GOAL', // MAJUSCULES
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
-                color: const Color(0xFF1A1A1A),
+                color: const Color(0xFF4A4A3A), // Gris foncé
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey[800]!, width: 1),
               ),
-              padding: const EdgeInsets.all(10),
               child: TextField(
-                controller: descriptionController,
-                style: const TextStyle(color: Colors.white, fontSize: 11),
-                maxLines: 2,
+                controller: _descriptionController,
+                style: const TextStyle(color: Colors.white, fontSize: 14),
+                maxLines: 4,
                 decoration: InputDecoration(
                   hintText: 'The goal of your community...',
-                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: 11),
+                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: 13),
                   border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  contentPadding: const EdgeInsets.all(16),
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
 
+            // TARGET TO BE ACHIEVED
             const Text(
-              'Target to be achieved (XOF)',
+              'TARGET TO BE ACHIEVED (XOF)', // MAJUSCULES
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 6),
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFF1A1A1A),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey[800]!, width: 1),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: TextField(
-                controller: targetController,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: 'Ex. 5000000',
-                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: 11),
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  suffixText: 'XOF',
-                  suffixStyle: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 10,
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF4A4A3A), // Gris foncé
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        bottomLeft: Radius.circular(8),
+                      ),
+                    ),
+                    child: TextField(
+                      controller: _targetController,
+                      style: const TextStyle(color: Colors.white, fontSize: 14),
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        hintText: 'Ex: 5000000',
+                        hintStyle: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 13,
+                        ),
+                        border: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 16,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                Container(
+                  height: 50,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFFDB834),
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(8),
+                      bottomRight: Radius.circular(8),
+                    ),
+                  ),
+                  child: const Text(
+                    'XOF',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
 
+            // COLLECTION DEADLINE
             const Text(
-              'Collection deadline',
+              'COLLECTION DEADLINE', // MAJUSCULES
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
-                color: const Color(0xFF1A1A1A),
+                color: const Color(0xFF4A4A3A), // Gris foncé
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey[800]!, width: 1),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: TextField(
-                controller: deadlineController,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+                controller: _deadlineController,
+                style: const TextStyle(color: Colors.white, fontSize: 14),
                 readOnly: true,
                 decoration: InputDecoration(
                   hintText: 'jj/mm/aaaa',
-                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: 11),
+                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: 13),
                   border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  suffixIcon: const Icon(
-                    Icons.calendar_today,
-                    color: Color(0xFFFDB834),
-                    size: 16,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
+                  ),
+                  suffixIcon: const Padding(
+                    padding: EdgeInsets.only(right: 12),
+                    child: Icon(
+                      Icons.calendar_today,
+                      color: Colors.white,
+                      size: 18,
+                    ),
                   ),
                 ),
                 onTap: () async {
@@ -207,149 +240,166 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
                     lastDate: DateTime.now().add(const Duration(days: 365)),
                   );
                   if (date != null) {
-                    deadlineController.text =
-                        '${date.day}/${date.month}/${date.year}';
+                    _deadlineController.text =
+                        '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
                   }
                 },
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
 
+            // SUGGESTED CONTRIBUTION
             const Text(
-              'Suggested contribution (Optional)',
+              'SUGGESTED CONTRIBUTION (OPTIONAL)', // MAJUSCULES
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 6),
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFF1A1A1A),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey[800]!, width: 1),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: TextField(
-                controller: suggestionController,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: 'Ex. 5000',
-                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: 11),
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  suffixText: 'XOF',
-                  suffixStyle: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 10,
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF4A4A3A), // Gris foncé
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8),
+                        bottomLeft: Radius.circular(8),
+                      ),
+                    ),
+                    child: TextField(
+                      controller: _suggestionController,
+                      style: const TextStyle(color: Colors.white, fontSize: 14),
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        hintText: 'Ex: 5000',
+                        hintStyle: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 13,
+                        ),
+                        border: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 16,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                Container(
+                  height: 50,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFFDB834),
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(8),
+                      bottomRight: Radius.circular(8),
+                    ),
+                  ),
+                  child: const Text(
+                    'XOF',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
 
+            // VISIBILITY OF THE AID
             const Text(
-              'Visibility of the aid',
+              'VISIBILITY OF THE AID', // MAJUSCULES
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
                   child: _buildVisibilityOption(
                     title: 'Private',
-                    icon: Icons.lock,
-                    subtitle: 'By invitation only',
+                    icon: Icons.lock, // Icône plus simple comme l'image
+                    subtitle: 'By invitation only.', // Texte sur une ligne
                     value: 'private',
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 12),
                 Expanded(
                   child: _buildVisibilityOption(
                     title: 'Audience',
-                    icon: Icons.group,
-                    subtitle: 'Visible to everyone.',
+                    icon: Icons.group, // Icône plus simple
+                    subtitle: 'Visible to everyone.', // Texte sur une ligne
                     value: 'audience',
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
 
+            // BENEFICIARY
             const Text(
-              'Beneficiary',
+              'BENEFICIARY', // MAJUSCULES
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
-                color: const Color(0xFF1A1A1A),
+                color: const Color(0xFF4A4A3A), // Gris foncé
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey[800]!, width: 1),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: TextField(
-                controller: beneficiaryController,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+                controller: _beneficiaryController,
+                style: const TextStyle(color: Colors.white, fontSize: 14),
                 decoration: InputDecoration(
                   hintText: "PERSON'S NAME",
-                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: 11),
+                  hintStyle: TextStyle(color: Colors.grey[600], fontSize: 13),
                   border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  prefixIcon: const Icon(
-                    Icons.person_outline,
-                    color: Colors.grey,
-                    size: 16,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
+                  ),
+                  prefixIcon: const Padding(
+                    padding: EdgeInsets.only(left: 12, right: 8),
+                    child: Icon(
+                      Icons.person_outline,
+                      color: Colors.grey,
+                      size: 18,
+                    ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
 
+            // BUTTONS (Correction importante)
             Row(
               children: [
                 Expanded(
-                  child: OutlinedButton(
-                    onPressed: () => Navigator.pop(context),
-                    style: OutlinedButton.styleFrom(
-                      side: const BorderSide(
-                        color: Color(0xFFFDB834),
-                        width: 1,
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: const Text(
-                      'Delete',
-                      style: TextStyle(
-                        color: Color(0xFFFDB834),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
                   child: ElevatedButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/validate-community'),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/validate-community');
+                    },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFDB834),
+                      backgroundColor: const Color(0xFFFDB834), // Jaune
                       foregroundColor: Colors.black,
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -359,14 +409,37 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
                       'Validate',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 12,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: OutlinedButton(
+                    // Bouton avec bordure, pas ElevatedButton
+                    onPressed: () => Navigator.pop(context),
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.transparent, // Fond transparent
+                      side: const BorderSide(color: Colors.white, width: 1),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text(
+                      'Delete',
+                      style: TextStyle(
+                        color: Colors.white, // Texte blanc
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
                       ),
                     ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -383,39 +456,35 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
     return GestureDetector(
       onTap: () => setState(() => selectedVisibility = value),
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: const Color(0xFF3A3A2A),
+          color: const Color(0xFF4A4A3A), // Gris foncé
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: isSelected ? const Color(0xFFFDB834) : Colors.grey[800]!,
-            width: 1,
+            color: isSelected ? const Color(0xFFFDB834) : Colors.transparent,
+            width: 2,
           ),
         ),
         child: Column(
           children: [
-            Icon(
-              icon,
-              color: isSelected ? const Color(0xFFFDB834) : Colors.grey,
-              size: 20,
-            ),
-            const SizedBox(height: 4),
+            Icon(icon, color: Colors.white, size: 24),
+            const SizedBox(height: 8),
             Text(
               title,
-              style: TextStyle(
-                color: isSelected ? Colors.white : Colors.grey,
-                fontSize: 11,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 2),
+            const SizedBox(height: 4),
             Text(
               subtitle,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.grey[600],
-                fontSize: 9,
-                height: 1.2,
+                color: Colors.grey[400],
+                fontSize: 11,
+                height: 1.3,
               ),
             ),
           ],

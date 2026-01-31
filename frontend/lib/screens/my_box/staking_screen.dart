@@ -1,3 +1,4 @@
+import 'package:adjo/screens/my_box/staking_confirm_screen.dart';
 import 'package:flutter/material.dart';
 
 class StakingSetupScreen extends StatefulWidget {
@@ -8,7 +9,7 @@ class StakingSetupScreen extends StatefulWidget {
 }
 
 class _StakingSetupScreenState extends State<StakingSetupScreen> {
-  String? selectedDuration;
+  String? selectedDuration = '6M';
   int selectedLockPercentage = 50;
 
   @override
@@ -33,11 +34,11 @@ class _StakingSetupScreenState extends State<StakingSetupScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_none, color: Colors.white),
+            icon: const Icon(Icons.notifications_outlined, color: Colors.white),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.more_vert, color: Colors.white),
+            icon: const Icon(Icons.access_time, color: Colors.white),
             onPressed: () {},
           ),
         ],
@@ -53,7 +54,6 @@ class _StakingSetupScreenState extends State<StakingSetupScreen> {
               decoration: BoxDecoration(
                 color: const Color(0xFF3A3A2A),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFFDB834), width: 1),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,32 +64,41 @@ class _StakingSetupScreenState extends State<StakingSetupScreen> {
                       Text(
                         'AVAILABLE BALANCE',
                         style: TextStyle(
-                          color: Colors.grey[600],
+                          color: Color(0xFFB8A588),
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
                           letterSpacing: 0.5,
                         ),
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        '000,000 XOF',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      const Row(
+                        children: [
+                          Text(
+                            '000,000',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            'XOF',
+                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFDB834),
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: const Icon(
-                      Icons.wallet,
-                      color: Colors.black,
+                      Icons.account_balance_wallet,
+                      color: Color(0xFFFDB834),
                       size: 24,
                     ),
                   ),
@@ -99,80 +108,60 @@ class _StakingSetupScreenState extends State<StakingSetupScreen> {
             const SizedBox(height: 24),
 
             // Locked Amount Section
-            const Text(
-              'Locked amount',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Locked amount',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'Minimum 500 XOF',
+                  style: TextStyle(color: Colors.grey[600], fontSize: 11),
+                ),
+              ],
             ),
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFF1A1A1A),
+                color: const Color(0xFF3A3A2A),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey[800]!, width: 1),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Amount Display
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFDB834).withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: const Icon(
+                          Icons.account_balance_wallet,
+                          color: Color(0xFFFDB834),
+                          size: 20,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
                       const Text(
-                        'Locked amount',
+                        '0 XOF',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 13,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Text(
-                        'Minimum 500 XOF',
-                        style: TextStyle(color: Colors.grey, fontSize: 12),
-                      ),
                     ],
                   ),
-                  const SizedBox(height: 12),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF3A3A2A),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: const Color(0xFFFDB834),
-                        width: 1,
-                      ),
-                    ),
-                    child: const Row(
-                      children: [
-                        Icon(Icons.wallet, color: Color(0xFFFDB834), size: 20),
-                        SizedBox(width: 12),
-                        Expanded(
-                          child: TextField(
-                            enabled: false,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: '0 XOF',
-                              hintStyle: TextStyle(color: Colors.grey),
-                              border: InputBorder.none,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                   const SizedBox(height: 16),
-                  // Percentage buttons
+                  // Percentage Buttons
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -199,20 +188,27 @@ class _StakingSetupScreenState extends State<StakingSetupScreen> {
             ),
             const SizedBox(height: 12),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildDurationButton('3 Months', '3M'),
-                _buildDurationButton('6 Months', '6M'),
-                _buildDurationButton('12 Months', '12M'),
+                Expanded(
+                  child: _buildDurationButton('3 Months', 'APR 3%', '3M'),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _buildDurationButton('6 Months', 'APR 8%', '6M'),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _buildDurationButton('12 Months', 'APR 15%', '12M'),
+                ),
               ],
             ),
             const SizedBox(height: 24),
 
             // Profit Forecasts Section
-            const Text(
+            Text(
               'PROFIT FORECASTS',
               style: TextStyle(
-                color: Colors.grey,
+                color: Colors.grey[600],
                 fontSize: 10,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0.5,
@@ -222,12 +218,10 @@ class _StakingSetupScreenState extends State<StakingSetupScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFF1A1A1A),
+                color: const Color(0xFF3A3A2A),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey[800]!, width: 1),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -238,41 +232,73 @@ class _StakingSetupScreenState extends State<StakingSetupScreen> {
                           Text(
                             'Estimated Total at Maturity',
                             style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12,
+                              color: Colors.grey[400],
+                              fontSize: 11,
                             ),
                           ),
-                          const SizedBox(height: 8),
-                          const Text(
-                            '41,250 XOF',
+                          const SizedBox(height: 6),
+                          const Row(
+                            children: [
+                              Text(
+                                '41,250',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(width: 4),
+                              Text(
+                                'XOF',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'INDICATIVE STAKES EXCLUDED',
                             style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[600],
+                              fontSize: 8,
                             ),
                           ),
                         ],
                       ),
-                      Text(
-                        '+240 XOF',
-                        style: TextStyle(
-                          color: const Color(0xFF00FF00),
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF00FF00).withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: const Text(
+                          '+240 XOF',
+                          style: TextStyle(
+                            color: Color(0xFF00FF00),
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 16),
+                  const Divider(color: Color(0xFF4A4A3A), height: 1),
                   const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Unlock date',
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                        style: TextStyle(color: Colors.grey[400], fontSize: 12),
                       ),
                       const Text(
-                        '14 October 2024',
+                        '14 Otorber 2024',
                         style: TextStyle(
                           color: Color(0xFFFDB834),
                           fontSize: 12,
@@ -284,14 +310,18 @@ class _StakingSetupScreenState extends State<StakingSetupScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 32),
 
-            // Confirm Staking Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/staking-validate');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const StakingValidateScreen(),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFFDB834),
@@ -302,19 +332,9 @@ class _StakingSetupScreenState extends State<StakingSetupScreen> {
                   ),
                   elevation: 0,
                 ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Confirm Staking',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Icon(Icons.arrow_forward, size: 18),
-                  ],
+                child: const Text(
+                  'Confirm Staking',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
               ),
             ),
@@ -334,19 +354,19 @@ class _StakingSetupScreenState extends State<StakingSetupScreen> {
         });
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFFDB834) : const Color(0xFF3A3A2A),
+          color: isSelected ? const Color(0xFFFDB834) : Colors.transparent,
           borderRadius: BorderRadius.circular(6),
           border: Border.all(
-            color: isSelected ? const Color(0xFFFDB834) : Colors.grey[800]!,
+            color: isSelected ? const Color(0xFFFDB834) : Colors.grey[700]!,
             width: 1,
           ),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? Colors.black : Colors.grey,
+            color: isSelected ? Colors.black : Colors.grey[400],
             fontSize: 11,
             fontWeight: FontWeight.bold,
           ),
@@ -355,7 +375,7 @@ class _StakingSetupScreenState extends State<StakingSetupScreen> {
     );
   }
 
-  Widget _buildDurationButton(String label, String value) {
+  Widget _buildDurationButton(String label, String apr, String value) {
     final isSelected = selectedDuration == value;
     return GestureDetector(
       onTap: () {
@@ -364,13 +384,15 @@ class _StakingSetupScreenState extends State<StakingSetupScreen> {
         });
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isSelected ? const Color(0xFFFDB834) : const Color(0xFF3A3A2A),
-          borderRadius: BorderRadius.circular(6),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: isSelected ? const Color(0xFFFDB834) : Colors.grey[800]!,
-            width: 1,
+            color: isSelected
+                ? const Color(0xFFFDB834)
+                : const Color(0xFF3A3A2A),
+            width: 1.5,
           ),
         ),
         child: Column(
@@ -379,16 +401,16 @@ class _StakingSetupScreenState extends State<StakingSetupScreen> {
               label,
               style: TextStyle(
                 color: isSelected ? Colors.black : Colors.white,
-                fontSize: 11,
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 2),
+            const SizedBox(height: 4),
             Text(
-              value,
+              apr,
               style: TextStyle(
-                color: isSelected ? Colors.black : Colors.grey,
-                fontSize: 9,
+                color: isSelected ? Colors.black : Colors.grey[400],
+                fontSize: 10,
               ),
             ),
           ],

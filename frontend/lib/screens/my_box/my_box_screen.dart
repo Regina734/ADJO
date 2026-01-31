@@ -1,3 +1,4 @@
+import 'package:adjo/screens/my_box/staking_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -11,61 +12,54 @@ class MyBoxScreen extends StatefulWidget {
 class _MyBoxScreenState extends State<MyBoxScreen> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header Title
-          const Text(
-            'My Box',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        title: const Text(
+          'My Box',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
-          const SizedBox(height: 16),
-
-          // QR Code and Address Section
-          Padding(
-            padding: const EdgeInsets.all(0),
-            child: Container(
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined, color: Colors.white),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.access_time, color: Colors.white),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // QR Code and Public Identifier Section
+            Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFF1A1A1A),
+                color: const Color(0xFF3A3A2A),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey[800]!, width: 1),
               ),
               child: Row(
                 children: [
                   // QR Code
                   Container(
-                    width: 80,
-                    height: 80,
-                    padding: const EdgeInsets.all(4),
+                    width: 70,
+                    height: 70,
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '█ █ █\n█ █ █\n█ █ █',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            height: 0.8,
-                          ),
-                        ),
-                      ),
-                    ),
+                    child: CustomPaint(painter: QRCodePainter()),
                   ),
                   const SizedBox(width: 16),
                   // Address Info
@@ -74,7 +68,7 @@ class _MyBoxScreenState extends State<MyBoxScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'PUBLIC ADDRESS',
+                          'PUBLIC IDENTIFIER',
                           style: TextStyle(
                             color: Colors.grey[600],
                             fontSize: 10,
@@ -82,26 +76,22 @@ class _MyBoxScreenState extends State<MyBoxScreen> {
                             letterSpacing: 1,
                           ),
                         ),
-                        const SizedBox(height: 6),
-                        Text(
-                          'DAB: XYZ',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 8),
                         Row(
                           children: [
-                            Icon(Icons.copy, size: 14, color: Colors.grey),
-                            const SizedBox(width: 8),
-                            Text(
-                              'Copy',
+                            const Text(
+                              'GAB...XYZ',
                               style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 11,
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
                               ),
+                            ),
+                            const SizedBox(width: 8),
+                            const Icon(
+                              Icons.copy,
+                              size: 16,
+                              color: Color(0xFFFDB834),
                             ),
                           ],
                         ),
@@ -111,12 +101,10 @@ class _MyBoxScreenState extends State<MyBoxScreen> {
                 ],
               ),
             ),
-          ),
+            const SizedBox(height: 16),
 
-          // Balance Section
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
+            // Balance Section
+            Row(
               children: [
                 // Total Balance
                 Expanded(
@@ -125,19 +113,18 @@ class _MyBoxScreenState extends State<MyBoxScreen> {
                     decoration: BoxDecoration(
                       color: const Color(0xFF1A1A1A),
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey[800]!, width: 1),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.visibility_outlined,
                               size: 16,
-                              color: Colors.grey[400],
+                              color: Colors.white,
                             ),
-                            const SizedBox(width: 4),
+                            const SizedBox(width: 6),
                             Text(
                               'TOTAL BALANCE',
                               style: TextStyle(
@@ -154,7 +141,7 @@ class _MyBoxScreenState extends State<MyBoxScreen> {
                           '000,000 XOF',
                           style: TextStyle(
                             color: Color(0xFFFDB834),
-                            fontSize: 18,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -163,33 +150,42 @@ class _MyBoxScreenState extends State<MyBoxScreen> {
                   ),
                 ),
                 const SizedBox(width: 12),
-                // Blockchain Balance
+                // Blocked Balance
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: const Color(0xFF1A1A1A),
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey[800]!, width: 1),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Blockchain',
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 0.5,
-                          ),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.lock_outline,
+                              size: 16,
+                              color: Color(0xFFFDB834),
+                            ),
+                            const SizedBox(width: 6),
+                            const Text(
+                              'Blocked',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 12),
                         const Text(
                           '00,000 XOF',
                           style: TextStyle(
                             color: Color(0xFFFDB834),
-                            fontSize: 18,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -199,73 +195,125 @@ class _MyBoxScreenState extends State<MyBoxScreen> {
                 ),
               ],
             ),
-          ),
-          const SizedBox(height: 16),
+            const SizedBox(height: 16),
 
-          // Action Buttons
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
+            // Action Buttons
+            Row(
               children: [
                 _buildActionButton(
-                  icon: Icons.download,
+                  icon: Icons.arrow_downward,
                   label: 'Deposit',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Scaffold()),
+                    );
+                  },
                 ),
                 const SizedBox(width: 12),
                 _buildActionButton(
-                  icon: Icons.call_made,
+                  icon: Icons.arrow_upward,
                   label: 'Remove',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Scaffold()),
+                    );
+                  },
                 ),
                 const SizedBox(width: 12),
                 _buildActionButton(
-                  icon: Icons.trending_up,
+                  icon: Icons.layers,
                   label: 'Staking',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const StakingSetupScreen(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
-          ),
-          const SizedBox(height: 24),
+            const SizedBox(height: 24),
 
-          // Performance Chart
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Container(
+            // Performance Chart
+            Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: const Color(0xFF1A1A1A),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey[800]!, width: 1),
+                border: Border.all(color: const Color(0xFF3A3A2A), width: 1),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Performance',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Performance',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            '+11500 XOF',
+                            style: TextStyle(
+                              color: Color(0xFF00FF00),
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 6,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF00FF00).withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Row(
+                              children: const [
+                                Icon(
+                                  Icons.arrow_upward,
+                                  size: 10,
+                                  color: Color(0xFF00FF00),
+                                ),
+                                SizedBox(width: 2),
+                                Text(
+                                  '12.6%',
+                                  style: TextStyle(
+                                    color: Color(0xFF00FF00),
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Lifetime earnings (+30)',
+                    style: TextStyle(color: Colors.grey[600], fontSize: 10),
                   ),
                   const SizedBox(height: 16),
                   SizedBox(
-                    height: 150,
+                    height: 120,
                     child: LineChart(
                       LineChartData(
-                        gridData: FlGridData(
-                          show: true,
-                          drawVerticalLine: false,
-                          horizontalInterval: 10,
-                          getDrawingHorizontalLine: (value) {
-                            return FlLine(
-                              color: Colors.grey[800],
-                              strokeWidth: 0.5,
-                            );
-                          },
-                        ),
+                        gridData: FlGridData(show: false),
                         titlesData: FlTitlesData(show: false),
                         borderData: FlBorderData(show: false),
                         minX: 0,
@@ -289,9 +337,7 @@ class _MyBoxScreenState extends State<MyBoxScreen> {
                               FlSpot(11, 30),
                             ],
                             isCurved: true,
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFF00FF00), Color(0xFF00FF00)],
-                            ),
+                            color: const Color(0xFF00FF00),
                             barWidth: 2,
                             isStrokeCapRound: true,
                             dotData: FlDotData(show: false),
@@ -299,7 +345,7 @@ class _MyBoxScreenState extends State<MyBoxScreen> {
                               show: true,
                               gradient: LinearGradient(
                                 colors: [
-                                  const Color(0xFF00FF00).withOpacity(0.2),
+                                  const Color(0xFF00FF00).withOpacity(0.3),
                                   const Color(0xFF00FF00).withOpacity(0.0),
                                 ],
                                 begin: Alignment.topCenter,
@@ -315,13 +361,10 @@ class _MyBoxScreenState extends State<MyBoxScreen> {
                 ],
               ),
             ),
-          ),
-          const SizedBox(height: 24),
+            const SizedBox(height: 24),
 
-          // Recent Activity Section
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
+            // Recent Activity Header
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
@@ -333,7 +376,9 @@ class _MyBoxScreenState extends State<MyBoxScreen> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    // TODO: Navigate to full history
+                  },
                   child: const Text(
                     'View History',
                     style: TextStyle(
@@ -345,48 +390,41 @@ class _MyBoxScreenState extends State<MyBoxScreen> {
                 ),
               ],
             ),
-          ),
-          const SizedBox(height: 12),
+            const SizedBox(height: 12),
 
-          // Activity List
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                _buildActivityItem(
-                  icon: Icons.check_circle,
-                  iconColor: const Color(0xFF00FF00),
-                  title: 'Staking Rewards',
-                  subtitle: 'Just now',
-                  amount: '+300 XOF',
-                  amountColor: const Color(0xFF00FF00),
-                  hasViewLink: true,
-                ),
-                const SizedBox(height: 12),
-                _buildActivityItem(
-                  icon: Icons.swap_horiz,
-                  iconColor: Colors.grey[600]!,
-                  title: 'Outstanding transfer',
-                  subtitle: '1 day ago',
-                  amount: '-5,000 XOF',
-                  amountColor: Colors.red,
-                  hasViewLink: true,
-                ),
-                const SizedBox(height: 12),
-                _buildActivityItem(
-                  icon: Icons.account_balance,
-                  iconColor: Colors.orange[700]!,
-                  title: 'Bank deposit',
-                  subtitle: '2 days ago',
-                  amount: '+5000 XOF',
-                  amountColor: const Color(0xFF00FF00),
-                  hasViewLink: true,
-                ),
-              ],
+            // Activity List
+            _buildActivityItem(
+              icon: Icons.check_circle,
+              iconBgColor: const Color(0xFF00FF00).withOpacity(0.2),
+              iconColor: const Color(0xFF00FF00),
+              title: 'Staking Rewards',
+              subtitle: '12 Oct 2023 - 14:20',
+              amount: '+240 XOF',
+              amountColor: const Color(0xFF00FF00),
             ),
-          ),
-          const SizedBox(height: 24),
-        ],
+            const SizedBox(height: 12),
+            _buildActivityItem(
+              icon: Icons.arrow_upward,
+              iconBgColor: Colors.red.withOpacity(0.2),
+              iconColor: Colors.red,
+              title: 'Outgoing transfer',
+              subtitle: '12 Oct 2023 - 14:20',
+              amount: '-5.000 XOF',
+              amountColor: Colors.red,
+            ),
+            const SizedBox(height: 12),
+            _buildActivityItem(
+              icon: Icons.account_balance_wallet,
+              iconBgColor: const Color(0xFFFDB834).withOpacity(0.2),
+              iconColor: const Color(0xFFFDB834),
+              title: 'Bank deposit',
+              subtitle: '12 Oct 2023 - 14:20',
+              amount: '+00,000 XOF',
+              amountColor: const Color(0xFF00FF00),
+            ),
+            const SizedBox(height: 80), // Space for navbar
+          ],
+        ),
       ),
     );
   }
@@ -400,14 +438,14 @@ class _MyBoxScreenState extends State<MyBoxScreen> {
       child: GestureDetector(
         onTap: onPressed,
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 14),
           decoration: BoxDecoration(
             color: const Color(0xFFFDB834),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
             children: [
-              Icon(icon, color: Colors.black, size: 24),
+              Icon(icon, color: Colors.black, size: 20),
               const SizedBox(height: 6),
               Text(
                 label,
@@ -426,19 +464,18 @@ class _MyBoxScreenState extends State<MyBoxScreen> {
 
   Widget _buildActivityItem({
     required IconData icon,
+    required Color iconBgColor,
     required Color iconColor,
     required String title,
     required String subtitle,
     required String amount,
     required Color amountColor,
-    required bool hasViewLink,
   }) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey[800]!, width: 1),
+        color: const Color(0xFF2A2A2A),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         children: [
@@ -446,7 +483,7 @@ class _MyBoxScreenState extends State<MyBoxScreen> {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: iconColor.withOpacity(0.2),
+              color: iconBgColor,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Center(child: Icon(icon, color: iconColor, size: 20)),
@@ -484,18 +521,41 @@ class _MyBoxScreenState extends State<MyBoxScreen> {
                 ),
               ),
               const SizedBox(height: 4),
-              if (hasViewLink)
-                GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    'View Detail',
-                    style: TextStyle(color: Colors.grey[600], fontSize: 10),
-                  ),
-                ),
+              Text(
+                'View Hash',
+                style: TextStyle(color: Colors.grey[600], fontSize: 10),
+              ),
             ],
           ),
         ],
       ),
     );
   }
+}
+
+// Custom QR Code Painter
+class QRCodePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.fill;
+
+    final cellSize = size.width / 8;
+
+    // Simple QR code pattern
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 8; j++) {
+        if ((i + j) % 2 == 0) {
+          canvas.drawRect(
+            Rect.fromLTWH(i * cellSize, j * cellSize, cellSize, cellSize),
+            paint,
+          );
+        }
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
